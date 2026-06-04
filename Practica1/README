@@ -1,0 +1,233 @@
+### JOHAN MOISES CARDONA ROSALES - 202201405
+
+# PRACTICA 1 - IA JUNIO 2026
+
+## Ruta mas corta entre ciudades en Prolog
+
+## Descripcion general
+
+Este proyecto consiste en el desarrollo de un sistema hibrido para consultar rutas entre ciudades. La logica principal se implementa en Prolog, mientras que Python funciona como backend para comunicar la interfaz grafica con el motor logico.
+
+El usuario podra seleccionar una ciudad de origen y una ciudad destino para consultar la ruta mas corta, visualizar todas las rutas posibles, revisar la distancia total de cada ruta y administrar ciudades y conexiones.
+
+## Objetivo
+
+Desarrollar un sistema capaz de encontrar la ruta mas corta entre dos ciudades utilizando programacion logica en Prolog, con una interfaz web funcional y un backend en Python encargado de ejecutar consultas hacia el motor logico.
+
+## Tecnologias utilizadas
+
+### Frontend
+
+- React
+- Vite
+- HTML5
+- CSS3
+- JavaScript
+
+### Backend
+
+- Python 3.11
+- FastAPI
+
+### Motor logico
+
+- SWI-Prolog
+
+### Comunicacion entre Python y Prolog
+
+- PySwip
+
+### Control de versiones
+
+- Git
+- GitHub
+
+## Arquitectura propuesta
+
+```text
+Frontend (React + Vite)
+        |
+        | HTTP
+        v
+Backend API (FastAPI)
+        |
+        | PySwip
+        v
+SWI-Prolog (.pl)
+```
+
+## Flujo general del sistema
+
+```text
+Usuario
+   |
+   v
+Frontend
+   |
+   v
+Backend Python
+   |
+   v
+Prolog
+   |
+   v
+Backend Python
+   |
+   v
+Frontend
+   |
+   v
+Usuario
+```
+
+## Alcance minimo de la practica
+
+El sistema debe cumplir con las siguientes funcionalidades:
+
+- Definir una base de conocimiento en Prolog con al menos 10 ciudades.
+- Representar conexiones entre ciudades con origen, destino y distancia.
+- Permitir la busqueda de rutas entre dos ciudades ingresadas o seleccionadas por el usuario.
+- Evitar ciclos dentro de las rutas encontradas.
+- Calcular la distancia total de cada ruta.
+- Determinar automaticamente la ruta mas corta.
+- Mostrar al usuario la ruta encontrada y la distancia total recorrida.
+- Mostrar todas las rutas posibles entre dos ciudades, junto con su distancia total.
+- Permitir agregar nuevas ciudades.
+- Permitir agregar nuevas conexiones entre ciudades.
+- Implementar un backend en Python que ejecute consultas hacia Prolog.
+- Utilizar Prolog como motor principal de la logica.
+- Desarrollar un frontend funcional e intuitivo.
+- Implementar un patron de arquitectura para el backend.
+
+## Funcionalidades recomendadas
+
+- Validar que las ciudades ingresadas existan en la base de conocimiento.
+- Mostrar mensajes claros cuando no exista una ruta disponible.
+- Manejar errores en frontend y backend.
+- Ordenar las rutas de menor a mayor distancia.
+- Permitir limpiar o reiniciar la busqueda desde la interfaz.
+- Presentar la informacion mediante tarjetas, tablas o listas.
+- Comparar varias rutas y presentar estadisticas.
+
+## Restricciones
+
+- La logica de busqueda y optimizacion debe implementarse exclusivamente en Prolog.
+- Python solo debe actuar como capa de integracion y ejecucion de consultas.
+- No se permite implementar el algoritmo de busqueda de rutas directamente en Python.
+- No se permite usar bases de datos.
+
+## Responsabilidades por capa
+
+### Frontend
+
+El frontend sera la interfaz que utilizara el usuario para interactuar con el sistema.
+
+Funciones principales:
+
+- Seleccionar una ciudad de origen.
+- Seleccionar una ciudad destino.
+- Consultar la ruta mas corta.
+- Ver todas las rutas posibles.
+- Agregar nuevas ciudades.
+- Agregar conexiones entre ciudades.
+- Mostrar rutas y distancias.
+
+El frontend no realiza calculos de rutas. Su funcion es enviar solicitudes HTTP al backend y mostrar los resultados recibidos.
+
+### Backend
+
+El backend sera desarrollado con Python y FastAPI. Funcionara como intermediario entre el frontend y Prolog.
+
+Funciones principales:
+
+- Recibir solicitudes enviadas desde el frontend.
+- Validar los datos recibidos.
+- Ejecutar consultas hacia Prolog mediante PySwip.
+- Recibir respuestas generadas por Prolog.
+- Enviar resultados nuevamente al frontend.
+
+El backend no implementa la logica de busqueda de rutas.
+
+### Motor logico
+
+Prolog sera el encargado de representar el conocimiento y resolver el problema principal.
+
+En Prolog se definira:
+
+- La base de conocimiento con ciudades.
+- Las conexiones entre ciudades.
+- Las distancias entre conexiones.
+- Las reglas para buscar rutas.
+- La logica para evitar ciclos.
+- El calculo de distancia total.
+- La seleccion automatica de la ruta mas corta.
+
+## Endpoints propuestos
+
+```text
+GET  /ciudades
+POST /ruta-corta
+POST /todas-rutas
+POST /agregar-ciudad
+POST /agregar-conexion
+```
+
+## Patron de arquitectura propuesto para el backend
+
+Se propone utilizar una arquitectura por capas:
+
+- Capa de rutas: define los endpoints de FastAPI.
+- Capa de servicios: valida datos y coordina la logica de aplicacion.
+- Capa de integracion Prolog: carga el archivo `.pl` y ejecuta consultas mediante PySwip.
+
+Esta separacion permite mantener el backend ordenado y evita mezclar la API con la comunicacion directa hacia Prolog.
+
+## Estructura propuesta del proyecto
+
+```text
+Practica1/
+|-- README
+|-- Manual_Usuario.md
+|-- Manual_Tecnico.md
+|-- backend/
+|   |-- README.md
+|-- frontend/
+|   |-- README.md
+|-- prolog/
+|   |-- README.md
+|-- Evidencias/
+|   |-- README.md
+|-- Practica 1 - IA1 JUNIO.docx.pdf
+```
+
+## Entregables
+
+- Codigo fuente Prolog en archivo `.pl`.
+- Proyecto backend desarrollado en Python.
+- Proyecto frontend funcional.
+- Manual de usuario en formato `.md`.
+- Manual tecnico en formato `.md`.
+- Evidencias de ejecucion mediante capturas o registros de consola.
+- Repositorio Git con codigo fuente, documentacion y control de versiones.
+
+## Material de apoyo
+
+- Documentacion oficial de SWI-Prolog: https://www.swi-prolog.org
+- Tutorial de Prolog para principiantes: https://www.learnprolognow.org
+- Documentacion de PySwip: https://pyswip.readthedocs.io
+- Tutorial de FastAPI: https://fastapi.tiangolo.com
+- Documentacion de Git: https://git-scm.com/doc
+
+## Nombre del repositorio
+
+Formato solicitado por el enunciado:
+
+```text
+[IA1]_VACASJUN2026_{NOMBRE}_{CARNET}
+```
+
+Nombre sugerido:
+
+```text
+[IA1]_VACASJUN2026_JOHANCARDONA_202201405
+```
