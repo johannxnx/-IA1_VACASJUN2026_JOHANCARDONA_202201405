@@ -2,7 +2,6 @@
 
 ## Practica 1 - Ruta mas corta entre ciudades
 
-### Estudiante
 
 Johan Moises Cardona Rosales - 202201405
 

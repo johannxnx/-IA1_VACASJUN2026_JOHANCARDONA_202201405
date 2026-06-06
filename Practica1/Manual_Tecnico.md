@@ -41,18 +41,9 @@ El proyecto resuelve el problema de busqueda de rutas entre ciudades utilizando 
 ## 3. Arquitectura implementada
 
 El sistema utiliza una arquitectura hibrida dividida en tres capas principales:
+![alt text](image.png)
 
-```text
-Frontend (React + Vite)
-        |
-        | HTTP / JSON
-        v
-Backend API (FastAPI)
-        |
-        | PySwip
-        v
-Motor logico SWI-Prolog (.pl)
-```
+
 
 ### 3.1 Frontend
 
@@ -95,18 +86,7 @@ Prolog es responsable de:
 
 El backend implementa una arquitectura por capas.
 
-```text
-main.py
-  |
-  v
-services/rutas_service.py
-  |
-  v
-integrations/prolog_client.py
-  |
-  v
-prolog/rutas.pl
-```
+![alt text](image-1.png)
 
 ### Capa de rutas
 
@@ -150,45 +130,7 @@ Carga el archivo Prolog, ejecuta consultas mediante PySwip y transforma los resu
 
 ## 5. Estructura del proyecto
 
-```text
-Practica1/
-|-- README
-|-- Manual_Usuario.md
-|-- Manual_Tecnico.md
-|-- backend/
-|   |-- requirements.txt
-|   |-- README.md
-|   |-- app/
-|   |   |-- __init__.py
-|   |   |-- main.py
-|   |   |-- models.py
-|   |   |-- integrations/
-|   |   |   |-- __init__.py
-|   |   |   |-- prolog_client.py
-|   |   |-- services/
-|   |   |   |-- __init__.py
-|   |   |   |-- rutas_service.py
-|-- frontend/
-|   |-- package.json
-|   |-- index.html
-|   |-- README.md
-|   |-- src/
-|   |   |-- api.js
-|   |   |-- main.jsx
-|   |   |-- styles.css
-|-- prolog/
-|   |-- rutas.pl
-|   |-- README.md
-|-- Evidencias/
-|   |-- README.md
-|   |-- 01_backend_ejecucion.png
-|   |-- 02_frontend_ejecucion.png
-|   |-- 03_ciudades_backend.png
-|   |-- 04_ruta_mas_corta.png
-|   |-- 05_todas_las_rutas.png
-|   |-- 06_agregar_ciudad.png
-|   |-- 07_agregar_conexion.png
-```
+![alt text](image-2.png)
 
 ## 6. Archivo Prolog
 
