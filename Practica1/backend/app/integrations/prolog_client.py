@@ -10,6 +10,8 @@ except ImportError:
     Prolog = None
 
 
+# Esta clase concentra toda la comunicacion Python-Prolog.
+# El resto del backend no ejecuta consultas directamente.
 class PrologClient:
     def __init__(self) -> None:
         if Prolog is None:
@@ -17,20 +19,24 @@ class PrologClient:
                 "PySwip no esta instalado. Ejecuta: pip install -r backend/requirements.txt"
             )
 
+        # Carga el archivo .pl una vez para poder ejecutar consultas.
         self.prolog = Prolog()
         self.prolog_file = self._get_prolog_file()
         self.prolog.consult(str(self.prolog_file))
 
     def obtener_ciudades(self) -> list[str]:
+        # Consulta todos los hechos ciudad(Ciudad) definidos en Prolog.
         resultados = self.prolog.query("ciudad(Ciudad)")
         ciudades = [str(resultado["Ciudad"]) for resultado in resultados]
         return sorted(ciudades)
 
     def ruta_mas_corta(self, origen: str, destino: str) -> dict:
+        # Convierte texto del usuario a atomos Prolog validos antes de consultar.
         origen_atom = self._to_atom(origen)
         destino_atom = self._to_atom(destino)
         consulta = f"ruta_mas_corta({origen_atom}, {destino_atom}, Ruta, Distancia)"
 
+        # maxresult=1 porque esta consulta solo necesita la mejor ruta.
         resultados = list(self.prolog.query(consulta, maxresult=1))
         if not resultados:
             raise HTTPException(status_code=404, detail="No existe una ruta disponible.")
@@ -42,6 +48,7 @@ class PrologClient:
         destino_atom = self._to_atom(destino)
         consulta = f"ruta({origen_atom}, {destino_atom}, Ruta, Distancia)"
 
+        # Prolog genera todas las soluciones posibles para ruta/4.
         resultados = list(self.prolog.query(consulta))
         rutas = [self._convertir_ruta(resultado) for resultado in resultados]
         rutas.sort(key=lambda item: item["distancia"])
@@ -51,6 +58,7 @@ class PrologClient:
         ciudad_atom = self._to_atom(ciudad)
         consulta = f"agregar_ciudad({ciudad_atom})"
 
+        # Si Prolog no devuelve solucion, significa que la ciudad ya existia.
         if not list(self.prolog.query(consulta, maxresult=1)):
             raise HTTPException(status_code=409, detail="La ciudad ya existe.")
 
@@ -59,6 +67,7 @@ class PrologClient:
         destino_atom = self._to_atom(destino)
         consulta = f"agregar_conexion({origen_atom}, {destino_atom}, {distancia})"
 
+        # Prolog valida que las ciudades existan y que la distancia sea positiva.
         if not list(self.prolog.query(consulta, maxresult=1)):
             raise HTTPException(
                 status_code=400,
@@ -89,6 +98,8 @@ class PrologClient:
         return atom
 
     def _get_prolog_file(self) -> Path:
+        # Construye la ruta absoluta hacia prolog/rutas.pl sin depender
+        # de desde que carpeta se ejecute uvicorn.
         backend_dir = Path(__file__).resolve().parents[2]
         practica_dir = backend_dir.parent
         prolog_file = practica_dir / "prolog" / "rutas.pl"

@@ -1,5 +1,7 @@
 const API_URL = "http://127.0.0.1:8000";
 
+// Funcion central para hacer peticiones HTTP al backend.
+// Todas las llamadas reutilizan esta funcion para manejar JSON y errores igual.
 async function request(path, options = {}) {
   const response = await fetch(`${API_URL}${path}`, {
     headers: {
@@ -18,10 +20,12 @@ async function request(path, options = {}) {
   return data;
 }
 
+// Carga las ciudades que el backend obtiene desde Prolog.
 export function getCiudades() {
   return request("/ciudades");
 }
 
+// Solicita al backend la ruta de menor distancia.
 export function getRutaCorta(origen, destino) {
   return request("/ruta-corta", {
     method: "POST",
@@ -29,6 +33,7 @@ export function getRutaCorta(origen, destino) {
   });
 }
 
+// Solicita todas las rutas entre dos ciudades.
 export function getTodasRutas(origen, destino) {
   return request("/todas-rutas", {
     method: "POST",
@@ -36,6 +41,7 @@ export function getTodasRutas(origen, destino) {
   });
 }
 
+// Envia una ciudad nueva al backend para que Prolog la agregue en memoria.
 export function agregarCiudad(ciudad) {
   return request("/agregar-ciudad", {
     method: "POST",
@@ -43,6 +49,7 @@ export function agregarCiudad(ciudad) {
   });
 }
 
+// Envia una conexion nueva. Number(distancia) asegura que llegue como numero.
 export function agregarConexion(origen, destino, distancia) {
   return request("/agregar-conexion", {
     method: "POST",
@@ -50,6 +57,8 @@ export function agregarConexion(origen, destino, distancia) {
   });
 }
 
+// FastAPI puede responder errores como texto o como lista de validaciones.
+// Esta funcion los convierte a un mensaje simple para mostrarlo en pantalla.
 function formatError(detail) {
   if (!detail) {
     return "No se pudo completar la solicitud.";

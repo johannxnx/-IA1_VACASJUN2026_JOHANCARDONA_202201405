@@ -20,6 +20,8 @@ import {
 import "./styles.css";
 
 function App() {
+  // Estados principales de la interfaz: datos cargados, formularios,
+  // resultados y mensajes visibles para el usuario.
   const [ciudades, setCiudades] = useState([]);
   const [origen, setOrigen] = useState("");
   const [destino, setDestino] = useState("");
@@ -35,6 +37,7 @@ function App() {
 
   const puedeBuscar = origen && destino && origen !== destino;
 
+  // Al abrir la aplicacion se cargan las ciudades desde el backend.
   useEffect(() => {
     cargarCiudades();
   }, []);
@@ -46,6 +49,7 @@ function App() {
       const data = await getCiudades();
       setCiudades(data.ciudades);
 
+      // Selecciona valores iniciales para que el usuario pueda probar rapido.
       if (!origen && data.ciudades.length > 0) {
         setOrigen(data.ciudades[0]);
       }
@@ -59,6 +63,7 @@ function App() {
   }
 
   async function consultarRutaCorta() {
+    // Consulta principal de la practica: obtiene la mejor ruta desde Prolog.
     await ejecutarConsulta(async () => {
       const data = await getRutaCorta(origen, destino);
       setRutaCorta(data);
@@ -68,6 +73,7 @@ function App() {
   }
 
   async function consultarTodasRutas() {
+    // Obtiene todas las rutas; la primera tambien se muestra como mejor resultado.
     await ejecutarConsulta(async () => {
       const data = await getTodasRutas(origen, destino);
       setRutas(data.rutas);
@@ -77,6 +83,7 @@ function App() {
   }
 
   async function ejecutarConsulta(callback) {
+    // Wrapper para reutilizar manejo de carga, errores y limpieza de mensajes.
     setLoading(true);
     setError("");
     setMensaje("");
@@ -93,6 +100,7 @@ function App() {
   }
 
   async function guardarCiudad(event) {
+    // Evita que el formulario recargue la pagina y envia la ciudad al backend.
     event.preventDefault();
     setError("");
     setMensaje("");
@@ -113,6 +121,7 @@ function App() {
   }
 
   async function guardarConexion(event) {
+    // Envia origen, destino y distancia para crear una conexion nueva en Prolog.
     event.preventDefault();
     setError("");
     setMensaje("");
@@ -129,6 +138,7 @@ function App() {
   }
 
   function limpiarBusqueda() {
+    // Limpia resultados visibles sin borrar la base de conocimiento.
     setRutaCorta(null);
     setRutas([]);
     setMensaje("");
@@ -136,6 +146,7 @@ function App() {
   }
 
   const resumen = useMemo(() => {
+    // Calcula estadisticas simples solo cuando cambia el listado de rutas.
     if (rutas.length === 0) return null;
 
     const distancias = rutas.map((ruta) => ruta.distancia);
@@ -160,6 +171,7 @@ function App() {
       </section>
 
       <section className="workspace">
+        {/* Panel izquierdo: controles de busqueda y formularios de administracion. */}
         <aside className="panel controls-panel">
           <div className="panel-header">
             <Route size={20} />
@@ -260,6 +272,7 @@ function App() {
             </div>
           )}
 
+          {/* Resultado principal: ruta mas corta o estado inicial cuando no hay busqueda. */}
           {rutaCorta ? (
             <article className="route-highlight">
               <div>
@@ -276,6 +289,7 @@ function App() {
             </article>
           )}
 
+          {/* Estadisticas visibles cuando se consultan todas las rutas. */}
           {resumen && (
             <div className="stats-grid">
               <Stat label="Rutas" value={resumen.total} />
@@ -284,6 +298,7 @@ function App() {
             </div>
           )}
 
+          {/* Tabla visible cuando el usuario solicita todas las rutas. */}
           {rutas.length > 0 && (
             <div className="table-wrap">
               <table>
@@ -313,6 +328,7 @@ function App() {
 }
 
 function RoutePath({ ruta }) {
+  // Muestra la ruta como una secuencia visual de ciudades separadas por flechas.
   return (
     <div className="route-path">
       {ruta.map((ciudad, index) => (
@@ -326,6 +342,7 @@ function RoutePath({ ruta }) {
 }
 
 function Stat({ label, value }) {
+  // Tarjeta pequena para mostrar estadisticas de las rutas encontradas.
   return (
     <article className="stat">
       <span>{label}</span>
@@ -335,6 +352,7 @@ function Stat({ label, value }) {
 }
 
 function formatCiudad(ciudad) {
+  // Convierte atomos Prolog como puerto_barrios a texto legible: Puerto Barrios.
   return ciudad
     .split("_")
     .map((parte) => parte.charAt(0).toUpperCase() + parte.slice(1))
