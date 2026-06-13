@@ -1,0 +1,68 @@
+{
+  "fallo_disco_duro": [
+    "Realizar respaldo inmediato de los datos mas importantes",
+    "Ejecutar CHKDSK o similar para verificar sectores danados",
+    "Reemplazar el disco duro por uno nuevo (HDD o SSD)",
+    "Considerar instalacion en SSD para mejor rendimiento"
+  ],
+  "fallo_ram": [
+    "Ejecutar la herramienta MemTest86 para diagnostico detallado",
+    "Retirar y reinsertar los modulos de RAM asegurandose del encaje",
+    "Probar con un solo modulo de RAM a la vez para aislar el danado",
+    "Reemplazar el modulo de RAM defectuoso"
+  ],
+  "sobrecalentamiento_cpu": [
+    "Limpiar el polvo acumulado en ventiladores y disipadores",
+    "Reemplazar la pasta termica entre CPU y disipador",
+    "Verificar que los ventiladores giren correctamente",
+    "Mejorar la ventilacion del gabinete o agregar ventiladores"
+  ],
+  "fallo_tarjeta_grafica": [
+    "Actualizar los controladores de la tarjeta grafica",
+    "Verificar que la tarjeta este correctamente asentada en el slot PCIe",
+    "Limpiar los contactos dorados de la tarjeta grafica",
+    "Si el problema persiste, reemplazar la tarjeta grafica"
+  ],
+  "infeccion_malware": [
+    "Ejecutar un analisis completo con antivirus actualizado",
+    "Usar herramientas especializadas como Malwarebytes",
+    "Evitar descargar software de fuentes no confiables",
+    "Cambiar contrasenas de cuentas importantes tras la limpieza"
+  ],
+  "fallo_sistema_operativo": [
+    "Ejecutar reparacion del sistema operativo desde medio de arranque",
+    "Verificar y reparar archivos del sistema con SFC /scannow",
+    "Como ultima opcion, reinstalar el sistema operativo",
+    "Realizar respaldo de datos antes de reinstalar"
+  ],
+  "fallo_fuente_poder": [
+    "Verificar que todos los cables de alimentacion esten bien conectados",
+    "Probar con otra fuente de poder si es posible",
+    "Medir los voltajes de salida con multimetro",
+    "Reemplazar la fuente de poder si entrega voltajes inestables"
+  ],
+  "fallo_bateria": [
+    "Calibrar la bateria: descargar completamente y cargar al 100%",
+    "Verificar que el cargador entrega el voltaje correcto",
+    "Reemplazar la bateria por una original o compatible certificada",
+    "Evitar cargar la bateria en ambientes de alta temperatura"
+  ],
+  "fallo_red": [
+    "Actualizar los controladores del adaptador de red",
+    "Verificar la configuracion de red en el sistema operativo",
+    "Reiniciar el adaptador de red desde el administrador de dispositivos",
+    "Usar adaptador USB-WiFi externo como alternativa temporal"
+  ],
+  "fallo_teclado": [
+    "Verificar la conexion del teclado (USB o interna en laptops)",
+    "Probar con un teclado externo para descartar problema de software",
+    "Limpiar el teclado con aire comprimido",
+    "Reemplazar el teclado si el dano es fisico"
+  ],
+  "fallo_controladores": [
+    "Actualizar todos los controladores desde el administrador de dispositivos",
+    "Desinstalar y reinstalar el controlador del dispositivo con problemas",
+    "Usar herramientas del fabricante para actualizacion automatica",
+    "Restaurar el sistema a un punto anterior si el problema inicio tras una actualizacion"
+  ]
+}

@@ -1,0 +1,20 @@
+[
+  {"id": "pantalla_negra", "descripcion": "La pantalla no muestra imagen al encender"},
+  {"id": "reinicio_inesperado", "descripcion": "El equipo se reinicia solo sin razon aparente"},
+  {"id": "lentitud_sistema", "descripcion": "El sistema responde muy lento"},
+  {"id": "sobrecalentamiento", "descripcion": "El equipo se calienta demasiado al usarlo"},
+  {"id": "ruido_disco", "descripcion": "Se escuchan ruidos mecanicos desde el disco duro"},
+  {"id": "no_arranca", "descripcion": "El sistema operativo no carga correctamente"},
+  {"id": "pantalla_azul", "descripcion": "Aparece pantalla azul con codigo de error (BSOD)"},
+  {"id": "no_reconoce_dispositivos", "descripcion": "Los USB u otros perifericos no son detectados"},
+  {"id": "errores_memoria", "descripcion": "Aparecen mensajes de error relacionados con la RAM"},
+  {"id": "ventilador_ruidoso", "descripcion": "El ventilador hace ruido excesivo o inusual"},
+  {"id": "bateria_no_carga", "descripcion": "La bateria no aumenta su carga aunque este conectada"},
+  {"id": "wifi_no_conecta", "descripcion": "No es posible conectarse a redes inalambricas"},
+  {"id": "aplicaciones_cierran_solas", "descripcion": "Los programas se cierran solos de manera inesperada"},
+  {"id": "teclado_no_funciona", "descripcion": "Algunas teclas o todo el teclado no responde"},
+  {"id": "imagen_distorsionada", "descripcion": "La imagen en pantalla aparece con artefactos o distorsion"},
+  {"id": "no_enciende", "descripcion": "El equipo no da ninguna senal de vida al presionar el boton"},
+  {"id": "archivos_corruptos", "descripcion": "Archivos se corrumpen o desaparecen sin razon"},
+  {"id": "actualizaciones_fallan", "descripcion": "Las actualizaciones del sistema fallan o no se instalan"}
+]

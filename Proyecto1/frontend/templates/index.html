@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doctor Byte</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- BARRA DE NAVEGACION -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <div class="nav-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/>
+        </svg>
+      </div>
+      <span class="nav-title">Doctor<span class="accent">Byte</span></span>
+    </div>
+    <div class="nav-links">
+      <button class="nav-btn active" data-section="diagnostico">Diagnostico</button>
+      <button class="nav-btn" data-section="historial">Historial</button>
+      <button class="nav-btn" data-section="admin">Admin</button>
+    </div>
+  </nav>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main">
+
+    <!-- ===================== SECCION: DIAGNOSTICO ===================== -->
+    <section id="section-diagnostico" class="section active">
+
+      <!-- Hero -->
+      <div class="hero">
+        <div class="hero-badge">Sistema Experto con IA</div>
+        <h1 class="hero-title">Diagnostica tu <span class="accent">computadora</span></h1>
+        <p class="hero-subtitle">
+          Selecciona los sintomas que presenta tu equipo y Doctor Byte analizara
+          las posibles fallas con recomendaciones precisas.
+        </p>
+      </div>
+
+      <!-- Buscador de sintomas -->
+      <div class="search-container">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+          <input
+            type="text"
+            id="search-input"
+            class="search-input"
+            placeholder="Buscar sintoma..."
+          />
+        </div>
+        <div class="selection-counter">
+          <span id="counter">0</span> seleccionados
+        </div>
+      </div>
+
+      <!-- Grid de sintomas -->
+      <div id="sintomas-grid" class="sintomas-grid">
+        <!-- Se llena dinamicamente desde JS -->
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>Cargando sintomas...</p>
+        </div>
+      </div>
+
+      <!-- Boton de diagnostico -->
+      <div class="action-container">
+        <button id="btn-diagnosticar" class="btn-primary" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
+          </svg>
+          Analizar sintomas
+        </button>
+        <button id="btn-limpiar" class="btn-secondary">
+          Limpiar seleccion
+        </button>
+      </div>
+
+      <!-- Panel de resultados (oculto hasta que se diagnostique) -->
+      <div id="resultado-container" class="resultado-container hidden">
+        <div class="resultado-header">
+          <h2 class="resultado-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/>
+            </svg>
+            Resultado del diagnostico
+          </h2>
+          <span id="resultado-timestamp" class="resultado-ts"></span>
+        </div>
+        <div id="resultado-body" class="resultado-body">
+          <!-- Se llena desde JS -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================== SECCION: HISTORIAL ===================== -->
+    <section id="section-historial" class="section">
+
+      <div class="hero">
+        <h1 class="hero-title">Historial de <span class="accent">diagnosticos</span></h1>
+        <p class="hero-subtitle">Registro de todos los diagnosticos realizados por el sistema.</p>
+      </div>
+
+      <div id="historial-container" class="historial-container">
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>Cargando historial...</p>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+    <!-- ===================== SECCION: ADMIN ===================== -->
+    <section id="section-admin" class="section">
+      <div class="hero">
+        <h1 class="hero-title">Panel de <span class="accent">Administracion</span></h1>
+        <p class="hero-subtitle">Gestiona la base de conocimiento y configuracion del sistema.</p>
+      </div>
+
+      <!-- Tabs del admin -->
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="sintomas">Sintomas</button>
+        <button class="admin-tab" data-tab="fallas">Fallas</button>
+        <button class="admin-tab" data-tab="recomendaciones">Recomendaciones</button>
+        <button class="admin-tab" data-tab="reglas">Reglas</button>
+        <button class="admin-tab" data-tab="bot">Configuracion Bot</button>
+      </div>
+
+      <!-- TAB: SINTOMAS -->
+      <div id="admin-tab-sintomas" class="admin-panel active">
+        <div class="admin-toolbar">
+          <h3 class="admin-section-title">Sintomas</h3>
+          <button class="btn-primary btn-sm" id="btn-add-sintoma">+ Agregar</button>
+        </div>
+        <div id="form-sintoma" class="admin-form hidden">
+          <input id="sintoma-id" class="admin-input" placeholder="ID (ej: disco_lento)" />
+          <input id="sintoma-desc" class="admin-input" placeholder="Descripcion legible" />
+          <div class="admin-form-actions">
+            <button class="btn-primary btn-sm" id="btn-save-sintoma">Guardar</button>
+            <button class="btn-secondary btn-sm" id="btn-cancel-sintoma">Cancelar</button>
+          </div>
+        </div>
+        <div id="tabla-sintomas" class="admin-table-wrap"></div>
+      </div>
+
+      <!-- TAB: FALLAS -->
+      <div id="admin-tab-fallas" class="admin-panel hidden">
+        <div class="admin-toolbar">
+          <h3 class="admin-section-title">Fallas diagnosticables</h3>
+          <button class="btn-primary btn-sm" id="btn-add-falla">+ Agregar</button>
+        </div>
+        <div id="form-falla" class="admin-form hidden">
+          <input id="falla-id" class="admin-input" placeholder="ID (ej: fallo_nuevo)" />
+          <input id="falla-desc" class="admin-input" placeholder="Descripcion de la falla" />
+          <div class="admin-form-actions">
+            <button class="btn-primary btn-sm" id="btn-save-falla">Guardar</button>
+            <button class="btn-secondary btn-sm" id="btn-cancel-falla">Cancelar</button>
+          </div>
+        </div>
+        <div id="tabla-fallas" class="admin-table-wrap"></div>
+      </div>
+
+      <!-- TAB: RECOMENDACIONES -->
+      <div id="admin-tab-recomendaciones" class="admin-panel hidden">
+        <div class="admin-toolbar">
+          <h3 class="admin-section-title">Recomendaciones por falla</h3>
+          <select id="rec-falla-select" class="admin-input" style="max-width:300px"></select>
+        </div>
+        <div id="rec-lista" class="admin-rec-lista"></div>
+        <div class="admin-form" style="margin-top:12px">
+          <input id="rec-nueva" class="admin-input" placeholder="Nueva recomendacion..." />
+          <button class="btn-primary btn-sm" id="btn-add-rec">+ Agregar</button>
+        </div>
+      </div>
+
+      <!-- TAB: REGLAS -->
+      <div id="admin-tab-reglas" class="admin-panel hidden">
+        <div class="admin-toolbar">
+          <h3 class="admin-section-title">Reglas de inferencia</h3>
+          <button class="btn-primary btn-sm" id="btn-add-regla">+ Agregar</button>
+        </div>
+        <div id="form-regla" class="admin-form hidden">
+          <label class="admin-label">Diagnostica (conclusion):</label>
+          <select id="regla-conclusion" class="admin-input"></select>
+          <label class="admin-label">Cuando se presentan (condiciones):</label>
+          <div id="regla-conditions-wrap" class="conditions-grid"></div>
+          <div class="admin-form-actions">
+            <button class="btn-primary btn-sm" id="btn-save-regla">Guardar</button>
+            <button class="btn-secondary btn-sm" id="btn-cancel-regla">Cancelar</button>
+          </div>
+        </div>
+        <div id="tabla-reglas" class="admin-table-wrap"></div>
+      </div>
+
+      <!-- TAB: BOT -->
+      <div id="admin-tab-bot" class="admin-panel hidden">
+        <h3 class="admin-section-title">Configuracion del Bot de Telegram</h3>
+        <div class="admin-form" style="max-width:600px; margin-top:16px">
+          <label class="admin-label">Estado del bot:</label>
+          <div class="toggle-row">
+            <span id="bot-status-label">Activo</span>
+            <button id="btn-toggle-bot" class="btn-toggle active">Desactivar</button>
+          </div>
+          <label class="admin-label" style="margin-top:16px">Encabezado del mensaje:</label>
+          <input id="bot-encabezado" class="admin-input" />
+          <label class="admin-label" style="margin-top:12px">Mensaje cuando no hay diagnostico:</label>
+          <textarea id="bot-msg-sin-diag" class="admin-input admin-textarea" rows="3"></textarea>
+          <div class="admin-form-actions" style="margin-top:16px">
+            <button class="btn-primary btn-sm" id="btn-save-bot">Guardar cambios</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  <!-- TOAST DE NOTIFICACIONES -->
+  <div id="toast" class="toast hidden">
+    <span id="toast-msg"></span>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

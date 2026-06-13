@@ -1,0 +1,13 @@
+[
+  {"id": "fallo_disco_duro", "descripcion": "Fallo en el disco duro: el almacenamiento presenta danos fisicos o logicos"},
+  {"id": "fallo_ram", "descripcion": "Fallo en la memoria RAM: uno o mas modulos estan danados o mal instalados"},
+  {"id": "sobrecalentamiento_cpu", "descripcion": "Sobrecalentamiento de CPU: la temperatura excede niveles seguros de operacion"},
+  {"id": "fallo_tarjeta_grafica", "descripcion": "Fallo en la tarjeta grafica: el procesador de video no funciona correctamente"},
+  {"id": "infeccion_malware", "descripcion": "Infeccion por malware: software malicioso esta afectando el sistema"},
+  {"id": "fallo_sistema_operativo", "descripcion": "Fallo del sistema operativo: archivos del SO estan corruptos o incompletos"},
+  {"id": "fallo_fuente_poder", "descripcion": "Fallo en la fuente de poder: el suministro electrico es inestable o insuficiente"},
+  {"id": "fallo_bateria", "descripcion": "Fallo de bateria: la bateria no retiene carga o esta danada"},
+  {"id": "fallo_red", "descripcion": "Fallo de red: el adaptador de red o sus controladores presentan problemas"},
+  {"id": "fallo_teclado", "descripcion": "Fallo de teclado: el dispositivo de entrada tiene danos fisicos o de conexion"},
+  {"id": "fallo_controladores", "descripcion": "Fallo de controladores: los drivers del sistema estan desactualizados o corruptos"}
+]

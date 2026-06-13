@@ -1,0 +1,468 @@
+[
+  {
+    "id": "6ed7e6f4-bf20-49ac-8ee2-c57e03286fd7",
+    "timestamp": "2026-06-11T00:01:12.632861",
+    "sintomas": [
+      "wifi_no_conecta"
+    ],
+    "diagnosticos": []
+  },
+  {
+    "id": "b7ef70a2-c2ca-4920-a9e6-469956f159a7",
+    "timestamp": "2026-06-11T00:02:33.418149",
+    "sintomas": [
+      "reinicio_inesperado"
+    ],
+    "diagnosticos": []
+  },
+  {
+    "id": "4b574ada-f230-4b13-bfc2-79d675b5d5c7",
+    "timestamp": "2026-06-11T00:02:43.244902",
+    "sintomas": [
+      "reinicio_inesperado",
+      "pantalla_negra"
+    ],
+    "diagnosticos": []
+  },
+  {
+    "id": "5c3b903e-b0a0-497a-9f76-379ed17d7615",
+    "timestamp": "2026-06-11T00:03:37.644189",
+    "sintomas": [
+      "reinicio_inesperado",
+      "pantalla_negra",
+      "lentitud_sistema"
+    ],
+    "diagnosticos": []
+  },
+  {
+    "id": "90745d33-9b08-480b-a7bf-563ac250e385",
+    "timestamp": "2026-06-11T00:03:43.538632",
+    "sintomas": [
+      "reinicio_inesperado",
+      "pantalla_negra",
+      "lentitud_sistema",
+      "sobrecalentamiento",
+      "no_reconoce_dispositivos",
+      "no_arranca",
+      "pantalla_azul",
+      "ruido_disco"
+    ],
+    "diagnosticos": []
+  },
+  {
+    "id": "a57afe11-5148-4fd3-b7e4-f5a459c41e03",
+    "timestamp": "2026-06-11T00:03:52.691770",
+    "sintomas": [
+      "ventilador_ruidoso",
+      "bateria_no_carga"
+    ],
+    "diagnosticos": []
+  },
+  {
+    "id": "8492b318-854f-41ac-b08d-94bcfed3c039",
+    "timestamp": "2026-06-11T00:04:36.555774",
+    "sintomas": [
+      "pantalla_negra"
+    ],
+    "diagnosticos": []
+  },
+  {
+    "id": "cd449982-974b-4382-aa83-47eee23dd091",
+    "timestamp": "2026-06-11T00:04:58.561973",
+    "sintomas": [
+      "wifi_no_conecta"
+    ],
+    "diagnosticos": [
+      {
+        "falla": "fallo_red",
+        "descripcion": "Fallo de red: el adaptador de red o sus controladores presentan problemas",
+        "recomendaciones": [
+          "Actualizar los controladores del adaptador de red",
+          "Verificar la configuracion de red en el sistema operativo",
+          "Reiniciar el adaptador de red desde el administrador de dispositivos",
+          "Usar adaptador USB-WiFi externo como alternativa temporal"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "151741b5-62b1-419f-a637-f31bb46a65b6",
+    "timestamp": "2026-06-11T00:05:04.422620",
+    "sintomas": [
+      "no_enciende"
+    ],
+    "diagnosticos": [
+      {
+        "falla": "fallo_fuente_poder",
+        "descripcion": "Fallo en la fuente de poder: el suministro electrico es inestable o insuficiente",
+        "recomendaciones": [
+          "Verificar que todos los cables de alimentacion esten bien conectados",
+          "Probar con otra fuente de poder si es posible",
+          "Medir los voltajes de salida con multimetro",
+          "Reemplazar la fuente de poder si entrega voltajes inestables"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "88c91271-734f-44e9-949f-be17bf02764f",
+    "timestamp": "2026-06-11T00:05:09.000791",
+    "sintomas": [
+      "no_reconoce_dispositivos"
+    ],
+    "diagnosticos": []
+  },
+  {
+    "id": "c16c1669-ff79-46de-a0b1-2f6334737dce",
+    "timestamp": "2026-06-11T00:05:12.257993",
+    "sintomas": [
+      "sobrecalentamiento"
+    ],
+    "diagnosticos": [
+      {
+        "falla": "sobrecalentamiento_cpu",
+        "descripcion": "Sobrecalentamiento de CPU: la temperatura excede niveles seguros de operacion",
+        "recomendaciones": [
+          "Limpiar el polvo acumulado en ventiladores y disipadores",
+          "Reemplazar la pasta termica entre CPU y disipador",
+          "Verificar que los ventiladores giren correctamente",
+          "Mejorar la ventilacion del gabinete o agregar ventiladores"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cc2a5b60-de2d-482b-8c3e-7a7c8b67bf76",
+    "timestamp": "2026-06-11T00:05:16.269506",
+    "sintomas": [
+      "lentitud_sistema"
+    ],
+    "diagnosticos": []
+  },
+  {
+    "id": "ff37ef55-ec8b-40a8-b9c2-fe247b0cd47e",
+    "timestamp": "2026-06-11T00:05:19.124360",
+    "sintomas": [
+      "lentitud_sistema",
+      "pantalla_azul"
+    ],
+    "diagnosticos": []
+  },
+  {
+    "id": "064484a8-59f0-40f2-b0c4-fe98c7da03f8",
+    "timestamp": "2026-06-11T00:05:21.938159",
+    "sintomas": [
+      "pantalla_azul"
+    ],
+    "diagnosticos": []
+  },
+  {
+    "id": "e1992ef8-b101-45b1-8c33-d7d954f63b49",
+    "timestamp": "2026-06-11T00:05:25.110019",
+    "sintomas": [
+      "bateria_no_carga"
+    ],
+    "diagnosticos": [
+      {
+        "falla": "fallo_bateria",
+        "descripcion": "Fallo de bateria: la bateria no retiene carga o esta danada",
+        "recomendaciones": [
+          "Calibrar la bateria: descargar completamente y cargar al 100%",
+          "Verificar que el cargador entrega el voltaje correcto",
+          "Reemplazar la bateria por una original o compatible certificada",
+          "Evitar cargar la bateria en ambientes de alta temperatura"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "13982ff7-74e7-497b-b388-09338c9c17b6",
+    "timestamp": "2026-06-11T00:05:27.719505",
+    "sintomas": [
+      "imagen_distorsionada"
+    ],
+    "diagnosticos": [
+      {
+        "falla": "fallo_tarjeta_grafica",
+        "descripcion": "Fallo en la tarjeta grafica: el procesador de video no funciona correctamente",
+        "recomendaciones": [
+          "Actualizar los controladores de la tarjeta grafica",
+          "Verificar que la tarjeta este correctamente asentada en el slot PCIe",
+          "Limpiar los contactos dorados de la tarjeta grafica",
+          "Si el problema persiste, reemplazar la tarjeta grafica"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "5c7e6448-7e13-4354-9869-35c681b6191e",
+    "timestamp": "2026-06-11T00:05:30.169917",
+    "sintomas": [
+      "actualizaciones_fallan"
+    ],
+    "diagnosticos": []
+  },
+  {
+    "id": "3ae9120a-d21b-4c02-902b-10b2d31d078d",
+    "timestamp": "2026-06-11T00:05:32.816688",
+    "sintomas": [
+      "teclado_no_funciona"
+    ],
+    "diagnosticos": [
+      {
+        "falla": "fallo_teclado",
+        "descripcion": "Fallo de teclado: el dispositivo de entrada tiene danos fisicos o de conexion",
+        "recomendaciones": [
+          "Verificar la conexion del teclado (USB o interna en laptops)",
+          "Probar con un teclado externo para descartar problema de software",
+          "Limpiar el teclado con aire comprimido",
+          "Reemplazar el teclado si el dano es fisico"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "215511b5-0891-488c-b932-660bb5a34b7b",
+    "timestamp": "2026-06-11T00:05:35.862339",
+    "sintomas": [
+      "ventilador_ruidoso"
+    ],
+    "diagnosticos": []
+  },
+  {
+    "id": "69721479-8833-4011-b160-5bd9f5673d12",
+    "timestamp": "2026-06-11T00:05:39.754304",
+    "sintomas": [
+      "no_arranca"
+    ],
+    "diagnosticos": [
+      {
+        "falla": "fallo_sistema_operativo",
+        "descripcion": "Fallo del sistema operativo: archivos del SO estan corruptos o incompletos",
+        "recomendaciones": [
+          "Ejecutar reparacion del sistema operativo desde medio de arranque",
+          "Verificar y reparar archivos del sistema con SFC /scannow",
+          "Como ultima opcion, reinstalar el sistema operativo",
+          "Realizar respaldo de datos antes de reinstalar"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "9cedac9f-3ead-4f12-ade2-d879780dc69a",
+    "timestamp": "2026-06-11T00:05:42.428500",
+    "sintomas": [
+      "reinicio_inesperado"
+    ],
+    "diagnosticos": []
+  },
+  {
+    "id": "0d6d95b0-73cd-4ab8-9a9a-ec8b572e2727",
+    "timestamp": "2026-06-11T00:05:47.693954",
+    "sintomas": [
+      "pantalla_negra"
+    ],
+    "diagnosticos": []
+  },
+  {
+    "id": "2d24b595-3ecd-4a5f-9a68-8ecad44833f4",
+    "timestamp": "2026-06-11T00:05:50.374497",
+    "sintomas": [
+      "ruido_disco"
+    ],
+    "diagnosticos": [
+      {
+        "falla": "fallo_disco_duro",
+        "descripcion": "Fallo en el disco duro: el almacenamiento presenta danos fisicos o logicos",
+        "recomendaciones": [
+          "Realizar respaldo inmediato de los datos mas importantes",
+          "Ejecutar CHKDSK o similar para verificar sectores danados",
+          "Reemplazar el disco duro por uno nuevo (HDD o SSD)",
+          "Considerar instalacion en SSD para mejor rendimiento"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "be5068e3-12f6-4980-878e-c03d1263e2ec",
+    "timestamp": "2026-06-11T00:05:53.398926",
+    "sintomas": [
+      "errores_memoria"
+    ],
+    "diagnosticos": [
+      {
+        "falla": "fallo_ram",
+        "descripcion": "Fallo en la memoria RAM: uno o mas modulos estan danados o mal instalados",
+        "recomendaciones": [
+          "Ejecutar la herramienta MemTest86 para diagnostico detallado",
+          "Retirar y reinsertar los modulos de RAM asegurandose del encaje",
+          "Probar con un solo modulo de RAM a la vez para aislar el danado",
+          "Reemplazar el modulo de RAM defectuoso"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "126fb196-19d3-44c3-82a8-a3025ca2066f",
+    "timestamp": "2026-06-11T00:05:55.794627",
+    "sintomas": [
+      "aplicaciones_cierran_solas"
+    ],
+    "diagnosticos": []
+  },
+  {
+    "id": "c41200b8-c63d-41ca-8001-b3f422ea58a3",
+    "timestamp": "2026-06-11T00:05:59.861114",
+    "sintomas": [
+      "archivos_corruptos"
+    ],
+    "diagnosticos": []
+  },
+  {
+    "id": "e434dbc6-c43d-4727-829d-66bad8d3ed3d",
+    "timestamp": "2026-06-11T00:10:24.249679",
+    "sintomas": [
+      "pantalla_negra"
+    ],
+    "diagnosticos": [
+      {
+        "falla": "fallo_tarjeta_grafica",
+        "descripcion": "Fallo en la tarjeta grafica: el procesador de video no funciona correctamente",
+        "recomendaciones": [
+          "Actualizar los controladores de la tarjeta grafica",
+          "Verificar que la tarjeta este correctamente asentada en el slot PCIe",
+          "Limpiar los contactos dorados de la tarjeta grafica",
+          "Si el problema persiste, reemplazar la tarjeta grafica"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "79ce2013-261a-4e22-b649-c927cea624f1",
+    "timestamp": "2026-06-11T00:10:30.586445",
+    "sintomas": [
+      "pantalla_negra",
+      "ruido_disco",
+      "errores_memoria"
+    ],
+    "diagnosticos": [
+      {
+        "falla": "fallo_tarjeta_grafica",
+        "descripcion": "Fallo en la tarjeta grafica: el procesador de video no funciona correctamente",
+        "recomendaciones": [
+          "Actualizar los controladores de la tarjeta grafica",
+          "Verificar que la tarjeta este correctamente asentada en el slot PCIe",
+          "Limpiar los contactos dorados de la tarjeta grafica",
+          "Si el problema persiste, reemplazar la tarjeta grafica"
+        ]
+      },
+      {
+        "falla": "fallo_ram",
+        "descripcion": "Fallo en la memoria RAM: uno o mas modulos estan danados o mal instalados",
+        "recomendaciones": [
+          "Ejecutar la herramienta MemTest86 para diagnostico detallado",
+          "Retirar y reinsertar los modulos de RAM asegurandose del encaje",
+          "Probar con un solo modulo de RAM a la vez para aislar el danado",
+          "Reemplazar el modulo de RAM defectuoso"
+        ]
+      },
+      {
+        "falla": "fallo_disco_duro",
+        "descripcion": "Fallo en el disco duro: el almacenamiento presenta danos fisicos o logicos",
+        "recomendaciones": [
+          "Realizar respaldo inmediato de los datos mas importantes",
+          "Ejecutar CHKDSK o similar para verificar sectores danados",
+          "Reemplazar el disco duro por uno nuevo (HDD o SSD)",
+          "Considerar instalacion en SSD para mejor rendimiento"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "8fe7d9ca-1222-4215-ba96-2d6735a1ff41",
+    "timestamp": "2026-06-11T00:15:37.198920",
+    "sintomas": [
+      "reinicio_inesperado",
+      "no_arranca"
+    ],
+    "diagnosticos": [
+      {
+        "falla": "fallo_ram",
+        "descripcion": "Fallo en la memoria RAM: uno o mas modulos estan danados o mal instalados",
+        "recomendaciones": [
+          "Ejecutar la herramienta MemTest86 para diagnostico detallado",
+          "Retirar y reinsertar los modulos de RAM asegurandose del encaje",
+          "Probar con un solo modulo de RAM a la vez para aislar el danado",
+          "Reemplazar el modulo de RAM defectuoso"
+        ]
+      },
+      {
+        "falla": "fallo_sistema_operativo",
+        "descripcion": "Fallo del sistema operativo: archivos del SO estan corruptos o incompletos",
+        "recomendaciones": [
+          "Ejecutar reparacion del sistema operativo desde medio de arranque",
+          "Verificar y reparar archivos del sistema con SFC /scannow",
+          "Como ultima opcion, reinstalar el sistema operativo",
+          "Realizar respaldo de datos antes de reinstalar"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "e5522b48-0ee1-40c0-9b81-b84f77fa372a",
+    "timestamp": "2026-06-11T00:18:02.471170",
+    "sintomas": [
+      "reinicio_inesperado"
+    ],
+    "diagnosticos": [
+      {
+        "falla": "fallo_ram",
+        "descripcion": "Fallo en la memoria RAM: uno o mas modulos estan danados o mal instalados",
+        "recomendaciones": [
+          "Ejecutar la herramienta MemTest86 para diagnostico detallado",
+          "Retirar y reinsertar los modulos de RAM asegurandose del encaje",
+          "Probar con un solo modulo de RAM a la vez para aislar el danado",
+          "Reemplazar el modulo de RAM defectuoso"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "a6ab222a-82a3-4108-81c6-edd8dc60a3d0",
+    "timestamp": "2026-06-11T00:19:59.433349",
+    "sintomas": [
+      "reinicio_inesperado"
+    ],
+    "diagnosticos": [
+      {
+        "falla": "fallo_ram",
+        "descripcion": "Fallo en la memoria RAM: uno o mas modulos estan danados o mal instalados",
+        "recomendaciones": [
+          "Ejecutar la herramienta MemTest86 para diagnostico detallado",
+          "Retirar y reinsertar los modulos de RAM asegurandose del encaje",
+          "Probar con un solo modulo de RAM a la vez para aislar el danado",
+          "Reemplazar el modulo de RAM defectuoso"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "d3fb8a49-4d96-4bb2-b192-9974d6ef9bc9",
+    "timestamp": "2026-06-11T00:21:56.424784",
+    "sintomas": [
+      "bateria_no_carga"
+    ],
+    "diagnosticos": [
+      {
+        "falla": "fallo_bateria",
+        "descripcion": "Fallo de bateria: la bateria no retiene carga o esta danada",
+        "recomendaciones": [
+          "Calibrar la bateria: descargar completamente y cargar al 100%",
+          "Verificar que el cargador entrega el voltaje correcto",
+          "Reemplazar la bateria por una original o compatible certificada",
+          "Evitar cargar la bateria en ambientes de alta temperatura"
+        ]
+      }
+    ]
+  }
+]
