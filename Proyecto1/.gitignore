@@ -1,0 +1,11 @@
+# Variables de entorno (tokens, credenciales)
+.env
+*.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Historial de diagnosticos (datos locales)
+backend/data/history.json
