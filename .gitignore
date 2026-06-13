@@ -1,0 +1,35 @@
+# ── Credenciales y variables de entorno ─────────────────────
+.env
+*.env
+!.env.example
+
+# ── Python ───────────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+
+# ── Docker ───────────────────────────────────────────────────
+postgres_data/
+
+# ── Proyecto 1 – datos locales ───────────────────────────────
+Proyecto1/backend/data/history.json
+
+# ── IDE ──────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Sistema operativo ────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
