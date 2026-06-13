@@ -601,6 +601,7 @@ async function deleteRegla(id) {
 
 // ---- BOT CONFIG ----
 function renderBotConfig(cfg) {
+  document.getElementById("bot-chat-id").value      = cfg.chat_id              || "";
   document.getElementById("bot-encabezado").value   = cfg.mensaje_encabezado  || "";
   document.getElementById("bot-msg-sin-diag").value = cfg.mensaje_sin_diagnostico || "";
   const enabled = cfg.enabled !== false;
@@ -624,6 +625,7 @@ async function toggleBot() {
 
 async function saveBotConfig() {
   const datos = {
+    chat_id:                 document.getElementById("bot-chat-id").value.trim(),
     mensaje_encabezado:      document.getElementById("bot-encabezado").value.trim(),
     mensaje_sin_diagnostico: document.getElementById("bot-msg-sin-diag").value.trim(),
   };

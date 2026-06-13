@@ -464,5 +464,57 @@
         ]
       }
     ]
+  },
+  {
+    "id": "3ee3f8e2-67a0-49d3-b2cd-43cdc8596fe8",
+    "timestamp": "2026-06-13T13:14:57.844389",
+    "sintomas": [
+      "pantalla_negra",
+      "lentitud_sistema",
+      "reinicio_inesperado",
+      "no_arranca"
+    ],
+    "diagnosticos": [
+      {
+        "falla": "infeccion_malware",
+        "descripcion": "Infeccion por malware: software malicioso esta afectando el sistema",
+        "recomendaciones": [
+          "Ejecutar un analisis completo con antivirus actualizado",
+          "Usar herramientas especializadas como Malwarebytes",
+          "Evitar descargar software de fuentes no confiables",
+          "Cambiar contrasenas de cuentas importantes tras la limpieza"
+        ]
+      },
+      {
+        "falla": "fallo_ram",
+        "descripcion": "Fallo en la memoria RAM: uno o mas modulos estan danados o mal instalados",
+        "recomendaciones": [
+          "Ejecutar la herramienta MemTest86 para diagnostico detallado",
+          "Retirar y reinsertar los modulos de RAM asegurandose del encaje",
+          "Probar con un solo modulo de RAM a la vez para aislar el danado",
+          "Reemplazar el modulo de RAM defectuoso"
+        ]
+      },
+      {
+        "falla": "fallo_tarjeta_grafica",
+        "descripcion": "Fallo en la tarjeta grafica: el procesador de video no funciona correctamente",
+        "recomendaciones": [
+          "Actualizar los controladores de la tarjeta grafica",
+          "Verificar que la tarjeta este correctamente asentada en el slot PCIe",
+          "Limpiar los contactos dorados de la tarjeta grafica",
+          "Si el problema persiste, reemplazar la tarjeta grafica"
+        ]
+      },
+      {
+        "falla": "fallo_sistema_operativo",
+        "descripcion": "Fallo del sistema operativo: archivos del SO estan corruptos o incompletos",
+        "recomendaciones": [
+          "Ejecutar reparacion del sistema operativo desde medio de arranque",
+          "Verificar y reparar archivos del sistema con SFC /scannow",
+          "Como ultima opcion, reinstalar el sistema operativo",
+          "Realizar respaldo de datos antes de reinstalar"
+        ]
+      }
+    ]
   }
 ]

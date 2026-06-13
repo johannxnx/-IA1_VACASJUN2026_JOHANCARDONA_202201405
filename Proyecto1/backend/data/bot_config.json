@@ -1,5 +1,6 @@
 {
   "enabled": true,
+  "chat_id": "",
   "mensaje_sin_diagnostico": "No se encontro un diagnostico para los sintomas ingresados. Intenta seleccionar mas sintomas.",
   "mensaje_encabezado": "Doctor Byte - Nuevo Diagnostico"
 }

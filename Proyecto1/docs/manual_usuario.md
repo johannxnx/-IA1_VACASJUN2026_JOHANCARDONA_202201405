@@ -36,8 +36,8 @@ pip install -r requirements.txt
 ### Paso 3: Configurar el archivo .env
 Dentro de la carpeta `backend`, crea un archivo llamado `.env` con el siguiente contenido:
 ```
-TELEGRAM_BOT_TOKEN=tu_token_aqui
-TELEGRAM_CHAT_ID=tu_chat_id_aqui
+TELEGRAM_BOT_TOKEN=TOKEN
+TELEGRAM_CHAT_ID=ID
 FLASK_PORT=5000
 FLASK_DEBUG=True
 ```
@@ -50,11 +50,15 @@ python app.py
 
 Cuando veas el mensaje `Running on http://127.0.0.1:5000`, el sistema esta listo.
 
+![alt text](image.png)
+
 ### Paso 5: Abrir la aplicacion
 Abre tu navegador y visita:
 ```
 http://localhost:5000
 ```
+
+![alt text](image-1.png)
 
 ---
 
@@ -67,8 +71,12 @@ Al abrir la aplicacion veras la pantalla de diagnostico con los siguientes eleme
 **Buscador de sintomas**
 En la parte superior hay un campo de busqueda. Escribe una palabra clave para filtrar los sintomas mostrados. Por ejemplo, escribe "pantalla" para ver solo sintomas relacionados con la pantalla.
 
+![alt text](image-2.png)
+
 **Tarjetas de sintomas**
 Debajo del buscador aparece una cuadricula con todos los sintomas disponibles. Cada sintoma es una tarjeta que puedes hacer clic para seleccionarla. Las tarjetas seleccionadas se iluminan en azul con un checkmark.
+
+![alt text](image-3.png)
 
 **Contador de seleccion**
 Junto al buscador aparece un contador que muestra cuantos sintomas tienes seleccionados actualmente.
@@ -76,8 +84,12 @@ Junto al buscador aparece un contador que muestra cuantos sintomas tienes selecc
 **Boton "Analizar sintomas"**
 Una vez seleccionado al menos un sintoma, este boton se activa. Haciendo clic en el se enviaran los sintomas al sistema para obtener el diagnostico.
 
+![alt text](image-4.png)
+
 **Boton "Limpiar seleccion"**
 Deselecciona todos los sintomas y oculta el panel de resultados.
+
+![alt text](image-4.png)
 
 ### 4.2 Como hacer un diagnostico
 
@@ -102,6 +114,7 @@ Si el sistema no encuentra diagnostico, te indicara que intentes agregar mas sin
 
 Si el sistema tiene un bot de Telegram configurado, recibiras automaticamente un mensaje en Telegram con el resultado del diagnostico cada vez que hagas un analisis. No necesitas hacer nada adicional.
 
+![alt text](image-5.png)
 ---
 
 ## 5. Historial de diagnosticos
@@ -114,6 +127,8 @@ Cada entrada del historial muestra:
 - Los sintomas que se usaron (en etiquetas moradas).
 
 Haz clic en cualquier entrada para expandirla y ver los diagnosticos completos con sus recomendaciones.
+
+![alt text](image-6.png)
 
 ---
 

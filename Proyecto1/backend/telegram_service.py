@@ -47,13 +47,15 @@ def enviar_notificacion(sintomas, diagnosticos):
         print("[Telegram] Bot desactivado, se omite la notificacion.")
         return False
 
-    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+    chat_id = cfg.get("chat_id", "").strip() or TELEGRAM_CHAT_ID
+
+    if not TELEGRAM_BOT_TOKEN or not chat_id:
         print("[Telegram] Token o chat_id no configurados.")
         return False
 
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {
-        "chat_id": TELEGRAM_CHAT_ID,
+        "chat_id": chat_id,
         "text": _formatear_mensaje(sintomas, diagnosticos),
         "parse_mode": "HTML"
     }

@@ -18,28 +18,8 @@ El sistema simula el razonamiento de un tecnico especializado mediante reglas de
 
 El sistema esta compuesto por cuatro capas principales que se comunican entre si:
 
-```
-+------------------+        HTTP/REST        +------------------+
-|                  | <---------------------> |                  |
-|   FRONTEND WEB   |                         |   BACKEND FLASK  |
-|   HTML/CSS/JS    |                         |     (Python)     |
-|                  |                         |                  |
-+------------------+                         +--------+---------+
-                                                      |
-                              +------------------+    |   subprocess
-                              |   TELEGRAM BOT   |    |
-                              |    (API REST)    |    v
-                              +------------------+ +------------------+
-                                      ^            |   MOTOR PROLOG   |
-                                      |            |   (SWI-Prolog)   |
-                                      |            |  doctor_byte.pl  |
-                              notifica|            +------------------+
-                                      |
-                              +------------------+
-                              |    HISTORIAL     |
-                              |   history.json   |
-                              +------------------+
-```
+
+![alt text](arquitectura_doctor_byte.png)
 
 ### Flujo de una consulta
 
@@ -70,30 +50,7 @@ El sistema esta compuesto por cuatro capas principales que se comunican entre si
 
 ## 4. Estructura del Proyecto
 
-```
-Proyecto1/
-├── prolog/
-│   └── doctor_byte.pl       <- Base de conocimiento y motor de inferencia
-├── backend/
-│   ├── app.py               <- Servidor Flask y definicion de endpoints
-│   ├── prolog_interface.py  <- Comunicacion Python-Prolog via subprocess
-│   ├── history_manager.py   <- Gestion del historial de diagnosticos
-│   ├── telegram_service.py  <- Servicio de notificaciones a Telegram
-│   ├── config.py            <- Variables de configuracion y entorno
-│   ├── requirements.txt     <- Dependencias de Python
-│   ├── .env                 <- Variables de entorno (no se sube al repo)
-│   └── data/
-│       └── history.json     <- Historial persistente de diagnosticos
-├── frontend/
-│   ├── templates/
-│   │   └── index.html       <- Plantilla principal de la interfaz
-│   └── static/
-│       ├── css/
-│       │   └── style.css    <- Estilos de la interfaz
-│       └── js/
-│           └── app.js       <- Logica del frontend
-└── docs/                    <- Documentacion del proyecto
-```
+![alt text](arquitectura_doctor_byte.png)
 
 ---
 
