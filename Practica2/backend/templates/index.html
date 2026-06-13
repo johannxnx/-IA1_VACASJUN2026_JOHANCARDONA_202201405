@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartBot – Panel Administrativo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+<!-- ══════════════ LOGIN ══════════════ -->
+<div id="login-section" class="d-none">
+  <div class="login-card card">
+    <div class="card-body">
+      <div class="text-center mb-4">
+        <div class="login-logo">🤖</div>
+        <h4 class="fw-bold mb-1">SmartBot</h4>
+        <p class="text-muted small">Panel Administrativo</p>
+      </div>
+      <form id="login-form" onsubmit="handleLogin(event)">
+        <div class="mb-3">
+          <label class="form-label small fw-semibold">Usuario</label>
+          <input id="login-username" type="text" class="form-control" placeholder="IA1-User" required />
+        </div>
+        <div class="mb-3">
+          <label class="form-label small fw-semibold">Contraseña</label>
+          <input id="login-password" type="password" class="form-control" placeholder="••••••••" required />
+        </div>
+        <div id="login-error" class="alert alert-danger py-2 small d-none"></div>
+        <button id="login-btn" type="submit" class="btn btn-primary w-100 mt-2">
+          Ingresar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ ADMIN ══════════════ -->
+<div id="admin-section" class="d-none">
+
+  <!-- Sidebar -->
+  <nav id="sidebar">
+    <div class="sidebar-brand">
+      <h5>🤖 SmartBot</h5>
+      <p>Panel Administrativo</p>
+    </div>
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link active" href="#" data-section="dashboard" onclick="return navigate('dashboard')">
+          <i class="fas fa-chart-pie"></i> Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" data-section="categories" onclick="return navigate('categories')">
+          <i class="fas fa-tags"></i> Categorías
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" data-section="questions" onclick="return navigate('questions')">
+          <i class="fas fa-question-circle"></i> Preguntas
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" data-section="answers" onclick="return navigate('answers')">
+          <i class="fas fa-comment-dots"></i> Respuestas
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" data-section="config" onclick="return navigate('config')">
+          <i class="fas fa-cog"></i> Configuración
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" data-section="logs" onclick="return navigate('logs')">
+          <i class="fas fa-history"></i> Logs
+        </a>
+      </li>
+    </ul>
+    <div class="sidebar-footer">
+      <button class="btn btn-sm btn-outline-secondary w-100" onclick="logout()">
+        <i class="fas fa-sign-out-alt me-1"></i> Cerrar sesión
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <div id="main-content">
+    <div class="topbar">
+      <h4 id="page-title">Dashboard</h4>
+      <span class="badge bg-success">En línea</span>
+    </div>
+
+    <div class="content-area">
+
+      <!-- ── Dashboard ── -->
+      <div id="section-dashboard" class="section-content">
+        <div class="row g-3 mb-4">
+          <div class="col-md-4 col-lg-2">
+            <div class="card stat-card">
+              <div class="card-body d-flex align-items-center gap-3">
+                <div class="stat-icon bg-primary bg-opacity-10 text-primary"><i class="fas fa-question"></i></div>
+                <div>
+                  <div id="stat-questions" class="stat-value">–</div>
+                  <div class="stat-label">Preguntas</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-2">
+            <div class="card stat-card">
+              <div class="card-body d-flex align-items-center gap-3">
+                <div class="stat-icon bg-success bg-opacity-10 text-success"><i class="fas fa-comment"></i></div>
+                <div>
+                  <div id="stat-answers" class="stat-value">–</div>
+                  <div class="stat-label">Respuestas</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-2">
+            <div class="card stat-card">
+              <div class="card-body d-flex align-items-center gap-3">
+                <div class="stat-icon bg-warning bg-opacity-10 text-warning"><i class="fas fa-tag"></i></div>
+                <div>
+                  <div id="stat-categories" class="stat-value">–</div>
+                  <div class="stat-label">Categorías</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-2">
+            <div class="card stat-card">
+              <div class="card-body d-flex align-items-center gap-3">
+                <div class="stat-icon bg-info bg-opacity-10 text-info"><i class="fas fa-robot"></i></div>
+                <div>
+                  <div id="stat-queries" class="stat-value">–</div>
+                  <div class="stat-label">Consultas</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-2">
+            <div class="card stat-card">
+              <div class="card-body d-flex align-items-center gap-3">
+                <div class="stat-icon bg-success bg-opacity-10 text-success"><i class="fas fa-check-circle"></i></div>
+                <div>
+                  <div id="stat-answered" class="stat-value">–</div>
+                  <div class="stat-label">Respondidas</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-2">
+            <div class="card stat-card">
+              <div class="card-body d-flex align-items-center gap-3">
+                <div class="stat-icon bg-danger bg-opacity-10 text-danger"><i class="fas fa-times-circle"></i></div>
+                <div>
+                  <div id="stat-unanswered" class="stat-value">–</div>
+                  <div class="stat-label">Sin respuesta</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card table-card">
+          <div class="card-header">
+            <h6><i class="fas fa-fire me-2 text-danger"></i>Consultas más frecuentes</h6>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+                <tr><th>#</th><th>Consulta</th><th>Veces</th></tr>
+              </thead>
+              <tbody id="top-queries">
+                <tr><td colspan="3" class="text-center text-muted py-3">Cargando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Categorías ── -->
+      <div id="section-categories" class="section-content d-none">
+        <div class="card table-card">
+          <div class="card-header">
+            <h6><i class="fas fa-tags me-2 text-warning"></i>Categorías</h6>
+            <button class="btn btn-primary btn-sm" onclick="showCategoryForm()">
+              <i class="fas fa-plus me-1"></i>Nueva
+            </button>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+                <tr><th style="width:60px">ID</th><th>Nombre y descripción</th><th style="width:110px">Acciones</th></tr>
+              </thead>
+              <tbody id="categories-tbody">
+                <tr><td colspan="3" class="text-center text-muted py-3">Cargando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Preguntas ── -->
+      <div id="section-questions" class="section-content d-none">
+        <div class="card table-card">
+          <div class="card-header">
+            <h6><i class="fas fa-question-circle me-2 text-primary"></i>Preguntas</h6>
+            <button class="btn btn-primary btn-sm" onclick="showQuestionForm()">
+              <i class="fas fa-plus me-1"></i>Nueva
+            </button>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+                <tr><th style="width:60px">ID</th><th>Pregunta</th><th>Categoría</th><th>Resp.</th><th style="width:110px">Acciones</th></tr>
+              </thead>
+              <tbody id="questions-tbody">
+                <tr><td colspan="5" class="text-center text-muted py-3">Cargando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Respuestas ── -->
+      <div id="section-answers" class="section-content d-none">
+        <div class="card table-card">
+          <div class="card-header">
+            <h6><i class="fas fa-comment-dots me-2 text-success"></i>Respuestas</h6>
+            <button class="btn btn-primary btn-sm" onclick="showAnswerForm()">
+              <i class="fas fa-plus me-1"></i>Nueva
+            </button>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+                <tr><th style="width:60px">ID</th><th>Pregunta / Respuesta</th><th style="width:110px">Acciones</th></tr>
+              </thead>
+              <tbody id="answers-tbody">
+                <tr><td colspan="3" class="text-center text-muted py-3">Cargando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Configuración ── -->
+      <div id="section-config" class="section-content d-none">
+        <div class="card table-card" style="max-width:540px">
+          <div class="card-header">
+            <h6><i class="fas fa-cog me-2"></i>Configuración del Bot</h6>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label fw-semibold">ID del grupo/chat de Telegram</label>
+              <input id="config-chat-id" type="text" class="form-control"
+                     placeholder="ej. -1001234567890" />
+              <div class="form-text">Introduce el Chat ID del grupo o canal donde opera el bot.</div>
+            </div>
+            <button class="btn btn-primary" onclick="saveConfig()">
+              <i class="fas fa-save me-1"></i>Guardar configuración
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Logs ── -->
+      <div id="section-logs" class="section-content d-none">
+        <div class="card table-card">
+          <div class="card-header">
+            <h6><i class="fas fa-history me-2 text-secondary"></i>Historial de consultas</h6>
+            <button class="btn btn-outline-secondary btn-sm" onclick="loadLogs()">
+              <i class="fas fa-sync me-1"></i>Actualizar
+            </button>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover mb-0 small">
+              <thead class="table-light">
+                <tr><th>Fecha/Hora</th><th>Usuario</th><th>Consulta</th><th>Respuesta</th><th>Estado</th></tr>
+              </thead>
+              <tbody id="logs-tbody">
+                <tr><td colspan="5" class="text-center text-muted py-3">Cargando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content-area -->
+  </div><!-- /main-content -->
+</div><!-- /admin-section -->
+
+<!-- ══════════ MODAL Categoría ══════════ -->
+<div class="modal fade" id="categoryModal" tabindex="-1" data-bs-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="categoryModalLabel">Categoría</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Nombre <span class="text-danger">*</span></label>
+          <input id="cat-name" type="text" class="form-control" placeholder="Ej. Horarios y Fechas" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Descripción</label>
+          <input id="cat-desc" type="text" class="form-control" placeholder="Descripción breve..." />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveCategory()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL Pregunta ══════════ -->
+<div class="modal fade" id="questionModal" tabindex="-1" data-bs-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="questionModalLabel">Pregunta</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Texto de la pregunta <span class="text-danger">*</span></label>
+          <textarea id="q-text" class="form-control" rows="3" placeholder="¿Cuál es el horario de...?"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Categoría</label>
+          <select id="q-category" class="form-select">
+            <option value="">Sin categoría</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveQuestion()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL Respuesta ══════════ -->
+<div class="modal fade" id="answerModal" tabindex="-1" data-bs-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="answerModalLabel">Respuesta</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Pregunta asociada <span class="text-danger">*</span></label>
+          <select id="a-question" class="form-select">
+            <option value="">Seleccionar pregunta...</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Texto de la respuesta <span class="text-danger">*</span></label>
+          <textarea id="a-text" class="form-control" rows="4" placeholder="Escriba la respuesta aquí..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveAnswer()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ Toast ══════════ -->
+<div class="toast-container">
+  <div id="toast" class="toast align-items-center text-white border-0" role="alert">
+    <div class="d-flex">
+      <div class="toast-body" id="toast-body"></div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>
