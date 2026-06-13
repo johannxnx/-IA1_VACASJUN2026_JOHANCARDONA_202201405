@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: smartbot_db
+    environment:
+      POSTGRES_DB: smartbot_db
+      POSTGRES_USER: smartbot_user
+      POSTGRES_PASSWORD: smartbot_pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U smartbot_user -d smartbot_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: smartbot_backend
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://smartbot_user:smartbot_pass@db:5432/smartbot_db
+      SECRET_KEY: smartbot-secret-key-change-in-production-2024
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 1440
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  bot:
+    build: ./bot
+    container_name: smartbot_bot
+    environment:
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      API_URL: http://backend:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
