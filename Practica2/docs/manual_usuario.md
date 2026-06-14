@@ -91,6 +91,9 @@ Al iniciar sesión verás el **Dashboard** con estadísticas:
 - Consultas respondidas vs sin respuesta
 - Las 10 consultas más frecuentes
 
+
+![alt text](image-4.png)
+
 ### 5.2 Gestión de Categorías
 
 Navega a **Categorías** en el menú lateral:
@@ -100,7 +103,8 @@ Navega a **Categorías** en el menú lateral:
 - **Editar**: click en el ícono ✏️ de la fila correspondiente
 - **Eliminar**: click en el ícono 🗑️ → confirmar
 
-> Las preguntas de una categoría eliminada quedan sin categoría asignada.
+![alt text](image-5.png)
+
 
 ### 5.3 Gestión de Preguntas
 
@@ -112,13 +116,18 @@ Navega a **Preguntas**:
 
 La columna **Resp.** muestra cuántas respuestas tiene cada pregunta.
 
+
+![alt text](image-6.png)
+
 ### 5.4 Gestión de Respuestas
 
 Navega a **Respuestas**:
 
 - **Crear**: click en **"Nueva"** → selecciona la pregunta → escribe la respuesta → **Guardar**
-- **Editar**: click en ✏️ (solo se puede editar el texto, no cambiar la pregunta)
-- **Eliminar**: click en 🗑️
+- **Editar**: click en  (solo se puede editar el texto, no cambiar la pregunta)
+- **Eliminar**: click en eliminar
+
+![alt text](image-7.png)
 
 ### 5.5 Configuración del Bot
 
@@ -128,6 +137,8 @@ Navega a **Configuración**:
 - Click en **Guardar configuración**
 
 Para obtener el Chat ID de un grupo, añade el bot al grupo y envía un mensaje; el ID aparecerá en los logs del bot.
+
+![alt text](image-8.png)
 
 ### 5.6 Historial de Consultas (Logs)
 
@@ -152,6 +163,7 @@ Usa el botón **Actualizar** para refrescar los datos.
    - `wifi de la universidad`
 4. El bot responderá con la información más relevante
 
+
 ### Comandos disponibles
 
 | Comando       | Descripción                          |
@@ -159,6 +171,10 @@ Usa el botón **Actualizar** para refrescar los datos.
 | `/start`      | Inicia el bot y muestra bienvenida   |
 | `/help`       | Muestra ayuda de uso                 |
 | `/categorias` | Lista las categorías disponibles     |
+
+
+![alt text](image-9.png)
+
 
 ---
 

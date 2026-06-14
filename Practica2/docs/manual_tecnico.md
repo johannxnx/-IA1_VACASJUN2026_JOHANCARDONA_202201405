@@ -16,24 +16,9 @@ SmartBot es un sistema de respuestas automatizadas basado en un bot de Telegram 
 
 El sistema implementa una **arquitectura en capas (Layered Architecture / N-Tier)**:
 
-```
-┌─────────────────────────────────────────────────────────┐
-│  CAPA DE PRESENTACIÓN                                   │
-│  • Panel Admin (HTML / CSS / JS)                        │
-│  • Bot de Telegram (interfaz conversacional)            │
-├─────────────────────────────────────────────────────────┤
-│  CAPA DE APLICACIÓN / API                               │
-│  • FastAPI (Routers, Middlewares, Auth JWT)             │
-├─────────────────────────────────────────────────────────┤
-│  CAPA DE LÓGICA DE NEGOCIO                              │
-│  • Servicios: búsqueda semántica de preguntas           │
-│  • Seed: datos iniciales, usuario admin                 │
-├─────────────────────────────────────────────────────────┤
-│  CAPA DE ACCESO A DATOS                                 │
-│  • SQLAlchemy ORM                                       │
-│  • PostgreSQL                                           │
-└─────────────────────────────────────────────────────────┘
-```
+
+![alt text](image-1.png)
+
 
 ---
 
@@ -81,56 +66,14 @@ Practica2/
 
 ## 4. Tecnologías utilizadas
 
-| Componente      | Tecnología                   |
-|-----------------|------------------------------|
-| Backend         | Python 3.11, FastAPI         |
-| ORM             | SQLAlchemy 2.x               |
-| Base de datos   | PostgreSQL 15                |
-| Autenticación   | JWT (python-jose + bcrypt)   |
-| Bot de Telegram | python-telegram-bot 21.x     |
-| Frontend admin  | HTML5, Bootstrap 5, Vanilla JS |
-| Contenedores    | Docker, Docker Compose       |
-| Control version | Git / GitHub                 |
-
+![alt text](image-2.png)
 ---
 
 ## 5. Modelo de datos (ER)
 
-```
-categories
-├── id          PK
-├── name        UNIQUE NOT NULL
-└── description
+![alt text](image-3.png)
 
-questions
-├── id           PK
-├── question_text NOT NULL
-└── category_id  FK → categories.id (SET NULL)
-
-answers
-├── id          PK
-├── answer_text NOT NULL
-└── question_id FK → questions.id (CASCADE)
-
-admin_users
-├── id            PK
-├── username      UNIQUE NOT NULL
-└── password_hash NOT NULL
-
-query_logs
-├── id              PK
-├── telegram_user
-├── telegram_user_id
-├── query_text
-├── response_text
-├── timestamp       DEFAULT now()
-└── found_answer    BOOLEAN
-
-bot_config
-├── id    PK
-├── key   UNIQUE NOT NULL
-└── value
-```
+----
 
 **Relaciones:**
 - `categories` 1 ──── N `questions`
