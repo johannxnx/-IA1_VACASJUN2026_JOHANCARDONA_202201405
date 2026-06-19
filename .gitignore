@@ -23,6 +23,12 @@ postgres_data/
 # ── Proyecto 1 – datos locales ───────────────────────────────
 Proyecto1/backend/data/history.json
 
+# ── Practica3 – archivos generados en runtime ────────────────
+Practica3/backend/uploads/*
+!Practica3/backend/uploads/.gitkeep
+Practica3/backend/reports/*
+!Practica3/backend/reports/.gitkeep
+
 # ── IDE ──────────────────────────────────────────────────────
 .vscode/
 .idea/

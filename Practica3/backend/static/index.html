@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SmartInvoice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- LOGIN REDIRECT -->
+<script>if(!localStorage.getItem('si_token'))window.location.href='/login.html';</script>
+
+<!-- APP -->
+<div id="app" style="display:none;height:100vh">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <h2>Smart<span>Invoice</span></h2>
+      <p>IA1 · VACACIONES 2026</p>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Principal</div>
+      <button class="nav-item" data-nav="home" onclick="navigate('home')">
+        <i class="fa-solid fa-house"></i> Panel
+      </button>
+      <div class="nav-section">Gestión</div>
+      <button class="nav-item" data-nav="facturas" onclick="navigate('facturas')">
+        <i class="fa-solid fa-file-invoice"></i> Facturas
+      </button>
+      <button class="nav-item" data-nav="proveedores" onclick="navigate('proveedores')">
+        <i class="fa-solid fa-building"></i> Proveedores
+      </button>
+      <div class="nav-section">Sistema</div>
+      <button class="nav-item" data-nav="bitacora" onclick="navigate('bitacora')">
+        <i class="fa-solid fa-list-check"></i> Bitácora
+      </button>
+      <button class="nav-item" data-nav="reportes" onclick="navigate('reportes')">
+        <i class="fa-solid fa-chart-bar"></i> Reportes
+      </button>
+    </nav>
+    <div class="sidebar-user">
+      <div class="user-info">
+        <div class="user-avatar" id="user-avatar">A</div>
+        <div>
+          <div class="user-name" id="user-name">Admin</div>
+          <div class="user-role" id="user-role">Administrador</div>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <h1 id="topbar-title">Panel Principal</h1>
+      <div class="topbar-right">
+        <div class="badge-live">Sistema activo</div>
+        <a href="/rpa-form.html" target="_blank" class="btn btn-ghost btn-sm">
+          <i class="fa-solid fa-robot"></i> Formulario RPA
+        </a>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ── HOME ── -->
+      <div id="sec-home" class="section">
+        <div class="stats-grid">
+          <div class="stat-card blue">
+            <div class="stat-icon"><i class="fa-solid fa-file-invoice"></i></div>
+            <div class="stat-value" id="stat-total">—</div>
+            <div class="stat-label">Total Facturas</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="stat-value" id="stat-proc">—</div>
+            <div class="stat-label">Procesadas</div>
+          </div>
+          <div class="stat-card yellow">
+            <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
+            <div class="stat-value" id="stat-pend">—</div>
+            <div class="stat-label">Pendientes</div>
+          </div>
+          <div class="stat-card red">
+            <div class="stat-icon"><i class="fa-solid fa-circle-xmark"></i></div>
+            <div class="stat-value" id="stat-err">—</div>
+            <div class="stat-label">Con Error</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fa-solid fa-clock-rotate-left"></i> Actividad Reciente</div>
+              <button class="btn btn-ghost btn-sm" onclick="navigate('facturas')">Ver todas</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Estado</th><th>Archivo</th><th>N° Factura</th><th>Total</th><th>Fecha</th></tr></thead>
+                <tbody id="home-recent"><tr><td colspan="5" style="text-align:center;padding:24px;color:var(--text3)"><span class="loader"></span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fa-solid fa-coins"></i> Monto Total</div>
+            </div>
+            <div style="text-align:center;padding:24px 0">
+              <div style="font-size:11px;color:var(--text3);margin-bottom:8px">Suma de facturas procesadas</div>
+              <div id="stat-monto" style="font-size:26px;font-weight:700;color:var(--green)">—</div>
+            </div>
+            <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+              <button class="btn btn-accent" style="width:100%" onclick="navigate('reportes')">
+                <i class="fa-solid fa-file-export"></i> Generar Reporte
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── FACTURAS ── -->
+      <div id="sec-facturas" class="section">
+        <div class="card" style="margin-bottom:20px">
+          <div class="card-header">
+            <div class="card-title"><i class="fa-solid fa-upload"></i> Cargar Factura</div>
+          </div>
+          <div class="upload-zone" id="drop-zone">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <h3>Arrastra tu factura aquí o haz clic para seleccionar</h3>
+            <p>Formatos aceptados: PDF, JPG, JPEG, PNG</p>
+            <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png">
+          </div>
+          <div class="upload-progress" id="upload-progress">
+            <div style="font-size:12px;color:var(--text2);margin-bottom:4px">Procesando...</div>
+            <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+          </div>
+          <div class="upload-result" id="upload-result"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><i class="fa-solid fa-list"></i> Facturas Procesadas</div>
+            <div class="search-bar">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="search-facturas" placeholder="Buscar factura...">
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>#</th><th>Archivo</th><th>N° Factura</th><th>Fecha</th><th>Proveedor</th><th>Total</th><th>Estado</th><th>Cargado</th><th>Acciones</th></tr></thead>
+              <tbody id="facturas-table"><tr><td colspan="9" style="text-align:center;padding:32px;color:var(--text3)"><span class="loader"></span></td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PROVEEDORES ── -->
+      <div id="sec-proveedores" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><i class="fa-solid fa-building"></i> Proveedores</div>
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="search-proveedores" placeholder="Buscar...">
+              </div>
+              <button class="btn btn-accent" onclick="abrirCrearProveedor()">
+                <i class="fa-solid fa-plus"></i> Nuevo
+              </button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>#</th><th>Nombre</th><th>NIT</th><th>Email</th><th>Teléfono</th><th>Estado</th><th>Acciones</th></tr></thead>
+              <tbody id="proveedores-table"><tr><td colspan="7" style="text-align:center;padding:32px;color:var(--text3)"><span class="loader"></span></td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── BITÁCORA ── -->
+      <div id="sec-bitacora" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><i class="fa-solid fa-list-check"></i> Historial de Procesamiento</div>
+            <button class="btn btn-ghost btn-sm" onclick="loadBitacora()">
+              <i class="fa-solid fa-arrows-rotate"></i> Actualizar
+            </button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Fecha/Hora</th><th>Acción</th><th>Documento</th><th>Estado</th><th>Resultado</th><th>Usuario</th></tr></thead>
+              <tbody id="bitacora-table"><tr><td colspan="6" style="text-align:center;padding:32px;color:var(--text3)"><span class="loader"></span></td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── REPORTES ── -->
+      <div id="sec-reportes" class="section">
+        <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:20px">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fa-solid fa-bolt"></i> Generar Reporte</div>
+            </div>
+            <div class="report-options">
+              <div class="report-opt pdf selected" data-type="pdf">
+                <i class="fa-solid fa-file-pdf"></i>
+                <span>PDF</span>
+              </div>
+              <div class="report-opt excel" data-type="excel">
+                <i class="fa-solid fa-file-excel"></i>
+                <span>Excel</span>
+              </div>
+              <div class="report-opt csv" data-type="csv">
+                <i class="fa-solid fa-file-csv"></i>
+                <span>CSV</span>
+              </div>
+            </div>
+            <div style="margin-top:4px">
+              <label class="field-label">Enviar por email (opcional)</label>
+              <input type="email" id="report-email" class="input-field" placeholder="correo@ejemplo.com">
+            </div>
+            <button class="btn btn-accent" style="width:100%;margin-top:8px" id="btn-generar-reporte">
+              <i class="fa-solid fa-bolt"></i> Generar Reporte
+            </button>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fa-solid fa-folder-open"></i> Reportes Generados</div>
+              <button class="btn btn-ghost btn-sm" onclick="loadReportes()"><i class="fa-solid fa-arrows-rotate"></i></button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>#</th><th>Nombre</th><th>Tipo</th><th>Creado</th><th>Email</th><th></th></tr></thead>
+                <tbody id="reportes-table"><tr><td colspan="6" style="text-align:center;padding:32px;color:var(--text3)"><span class="loader"></span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </main>
+</div><!-- /app -->
+
+<!-- MODAL: Detalle factura -->
+<div class="modal-overlay" id="modal-detail">
+  <div class="modal" style="max-width:580px">
+    <div class="modal-header">
+      <h3><i class="fa-solid fa-file-invoice" style="color:var(--accent);margin-right:8px"></i>Detalle de Factura</h3>
+      <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" id="detail-content"></div>
+  </div>
+</div>
+
+<!-- MODAL: Proveedor -->
+<div class="modal-overlay" id="modal-proveedor">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="prov-modal-title">Nuevo Proveedor</h3>
+      <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <form id="form-proveedor">
+        <label class="field-label">Nombre *</label>
+        <input class="input-field" id="prov-nombre" placeholder="Empresa S.A." required>
+        <label class="field-label">NIT *</label>
+        <input class="input-field" id="prov-nit" placeholder="12345678-9" required>
+        <div class="input-row">
+          <div>
+            <label class="field-label">Email</label>
+            <input class="input-field" id="prov-email" placeholder="info@empresa.com" type="email">
+          </div>
+          <div>
+            <label class="field-label">Teléfono</label>
+            <input class="input-field" id="prov-telefono" placeholder="2222-3333">
+          </div>
+        </div>
+        <label class="field-label">Dirección</label>
+        <input class="input-field" id="prov-direccion" placeholder="Ciudad de Guatemala">
+        <div class="modal-footer" style="padding:0;border:none;margin-top:8px">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('modal-proveedor')">Cancelar</button>
+          <button type="submit" class="btn btn-accent"><i class="fa-solid fa-check"></i> Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- TOASTS -->
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script src="/js/api.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>

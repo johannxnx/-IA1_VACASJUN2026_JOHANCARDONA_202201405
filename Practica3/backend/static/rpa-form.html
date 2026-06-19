@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SmartInvoice — Formulario RPA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="rpa-page">
+  <div class="rpa-card">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+      <div style="width:36px;height:36px;background:rgba(91,141,238,.15);border-radius:8px;
+        display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:16px">
+        <i class="fa-solid fa-robot"></i>
+      </div>
+      <h2>Registro RPA de Factura</h2>
+    </div>
+    <p>Formulario objetivo para la automatización robótica de procesos (RPA) de SmartInvoice.</p>
+
+    <div id="rpa-form-wrap">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div>
+          <label class="field-label">N° de Factura</label>
+          <input class="input-field" id="rpa-numero-factura" placeholder="FAC-0001">
+        </div>
+        <div>
+          <label class="field-label">Fecha</label>
+          <input class="input-field" id="rpa-fecha" type="text" placeholder="2024-01-15">
+        </div>
+        <div>
+          <label class="field-label">Proveedor</label>
+          <input class="input-field" id="rpa-proveedor" placeholder="Empresa S.A.">
+        </div>
+        <div>
+          <label class="field-label">NIT</label>
+          <input class="input-field" id="rpa-nit" placeholder="12345678-9">
+        </div>
+        <div>
+          <label class="field-label">Subtotal (Q)</label>
+          <input class="input-field" id="rpa-subtotal" type="text" placeholder="0.00">
+        </div>
+        <div>
+          <label class="field-label">Impuestos (Q)</label>
+          <input class="input-field" id="rpa-impuestos" type="text" placeholder="0.00">
+        </div>
+      </div>
+      <div style="margin-top:2px">
+        <label class="field-label">Total (Q)</label>
+        <input class="input-field" id="rpa-total" type="text" placeholder="0.00">
+      </div>
+      <div style="margin-top:8px">
+        <label class="field-label">Observaciones</label>
+        <textarea class="input-field" id="rpa-observaciones" rows="3"
+          placeholder="Datos registrados automáticamente por SmartInvoice RPA"></textarea>
+      </div>
+      <button class="btn btn-accent" style="width:100%;margin-top:8px;padding:12px" id="rpa-submit">
+        <i class="fa-solid fa-robot"></i> Registrar via RPA
+      </button>
+    </div>
+
+    <div class="rpa-success" id="rpa-success">
+      <i class="fa-solid fa-circle-check"></i>
+      <h3 style="font-size:18px;font-weight:600;margin-bottom:8px">¡Registro exitoso!</h3>
+      <p style="color:var(--text2);font-size:14px">La información fue registrada correctamente por el proceso RPA.</p>
+      <p style="color:var(--text3);font-size:12px;margin-top:6px" id="rpa-timestamp"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('rpa-submit').addEventListener('click', () => {
+  const campos = ['rpa-numero-factura','rpa-fecha','rpa-proveedor','rpa-nit','rpa-subtotal','rpa-impuestos','rpa-total'];
+  const vacio = campos.every(id => !document.getElementById(id).value.trim());
+  if (vacio) return;
+
+  document.getElementById('rpa-form-wrap').style.display = 'none';
+  const suc = document.getElementById('rpa-success');
+  suc.style.display = 'block';
+  document.getElementById('rpa-timestamp').textContent =
+    'Registrado: ' + new Date().toLocaleString('es-GT');
+});
+</script>
+</body>
+</html>

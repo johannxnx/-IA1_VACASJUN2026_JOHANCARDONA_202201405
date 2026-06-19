@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SmartInvoice — Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-logo">
+      <h1>Smart<span>Invoice</span></h1>
+      <p>Sistema Inteligente de Procesamiento de Facturas</p>
+    </div>
+    <h2>Iniciar sesión</h2>
+    <form id="login-form">
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="email" id="email" placeholder="admin@smartinvoice.com" required autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn-primary" id="btn-login">
+        <span id="btn-text">Ingresar</span>
+      </button>
+      <p class="login-error" id="login-error"><i class="fa-solid fa-circle-exclamation"></i> Credenciales inválidas</p>
+    </form>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script>
+  if (getToken()) window.location.href = '/index.html';
+
+  document.getElementById('login-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn  = document.getElementById('btn-login');
+    const txt  = document.getElementById('btn-text');
+    const err  = document.getElementById('login-error');
+    btn.disabled = true;
+    txt.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verificando...';
+    err.style.display = 'none';
+
+    const email    = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const data     = await apiFetch('/api/auth/login', {
+      method: 'POST', body: JSON.stringify({ email, password })
+    }).catch(() => null);
+
+    if (data?.access_token) {
+      localStorage.setItem('si_token', data.access_token);
+      const payload = JSON.parse(atob(data.access_token.split('.')[1]));
+      localStorage.setItem('si_user', JSON.stringify({ email: payload.email, rol: payload.rol, nombre: payload.email }));
+      window.location.href = '/index.html';
+    } else {
+      err.style.display = 'block';
+      btn.disabled = false;
+      txt.textContent = 'Ingresar';
+    }
+  });
+
+  async function apiFetch(path, opts = {}) {
+    const headers = { 'Content-Type': 'application/json', ...opts.headers };
+    const res = await fetch(path, { ...opts, headers });
+    return res.ok ? res.json() : null;
+  }
+</script>
+</body>
+</html>
