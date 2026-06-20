@@ -5,14 +5,36 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from app.database import engine, Base
+from app.database import engine, Base, SessionLocal
 from app import models
+from app.models.usuario import Usuario
 from app.routers import auth, proveedores, facturas, bitacora, reportes
 from app.config import settings
+from passlib.context import CryptContext
 
 # Crea automaticamente todas las tablas en PostgreSQL si todavia no existen
 # En produccion se usaria Alembic para migraciones controladas
 Base.metadata.create_all(bind=engine)
+
+# Inserta el usuario administrador por defecto si la base de datos esta vacia
+# Permite que el sistema funcione desde cero sin pasos manuales de configuracion
+def _seed_admin():
+    pwd = CryptContext(schemes=["bcrypt"], deprecated="auto")
+    db = SessionLocal()
+    try:
+        if not db.query(Usuario).filter(Usuario.email == "admin@smartinvoice.com").first():
+            db.add(Usuario(
+                nombre="Administrador",
+                email="admin@smartinvoice.com",
+                password_hash=pwd.hash("admin123"),
+                rol="admin",
+                activo=True,
+            ))
+            db.commit()
+    finally:
+        db.close()
+
+_seed_admin()
 
 # Instancia principal de la aplicacion con metadata para la documentacion automatica /docs
 app = FastAPI(title="SmartInvoice API", version="1.0.0")

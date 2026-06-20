@@ -1,0 +1,21 @@
+# Credenciales: nunca deben entrar a la imagen Docker
+.env
+
+# Entorno virtual de Python local
+venv/
+.venv/
+
+# Cache de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos de runtime generados localmente (se recrean en el contenedor)
+uploads/*
+reports/*
+
+# Archivos de desarrollo
+*.log
+.git/
+.gitignore
