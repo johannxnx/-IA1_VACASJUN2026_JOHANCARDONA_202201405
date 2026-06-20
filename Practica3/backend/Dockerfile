@@ -13,6 +13,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 COPY requirements.txt .
+# Instalar PyTorch CPU-only antes que EasyOCR para evitar descargar la version CUDA (~3GB innecesarios en servidor sin GPU)
+RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cpu
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Instala el navegador Chromium y sus dependencias del sistema para el RPA con Playwright
