@@ -13,9 +13,10 @@ router = APIRouter()
 
 @router.get("/", response_model=List[AnswerOut])
 def list_answers(
-    question_id: Optional[int] = None,
+    question_id: Optional[int] = None,  # parámetro de query opcional: GET /api/answers/?question_id=3
     db: Session = Depends(get_db),
 ):
+    # No requiere autenticación (el panel admin y el bot pueden consultar respuestas)
     q = db.query(Answer)
     if question_id is not None:
         q = q.filter(Answer.question_id == question_id)
@@ -28,8 +29,10 @@ def create_answer(
     db: Session = Depends(get_db),
     _=Depends(get_current_user),
 ):
+    # Verifica que la pregunta a la que se asocia la respuesta exista
     if not db.query(Question).filter(Question.id == data.question_id).first():
         raise HTTPException(status_code=404, detail="Pregunta no encontrada")
+
     answer = Answer(**data.model_dump())
     db.add(answer)
     db.commit()
@@ -55,6 +58,8 @@ def update_answer(
     a = db.query(Answer).filter(Answer.id == answer_id).first()
     if not a:
         raise HTTPException(status_code=404, detail="Respuesta no encontrada")
+
+    # Solo actualiza los campos que el cliente envió (answer_text en este caso)
     for key, value in data.model_dump(exclude_unset=True).items():
         setattr(a, key, value)
     db.commit()

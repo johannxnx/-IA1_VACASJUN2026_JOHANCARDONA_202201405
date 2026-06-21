@@ -4,33 +4,38 @@ from .auth import get_password_hash
 
 
 def seed_data():
+    # Inserta datos iniciales en la BD la primera vez que el sistema arranca
+    # Se llama desde el evento "startup" de FastAPI (main.py)
     db = SessionLocal()
     try:
-        # Admin user
+        # Crea el usuario administrador si no existe todavía
         if not db.query(AdminUser).filter(AdminUser.username == "IA1-User").first():
             db.add(AdminUser(
                 username="IA1-User",
-                password_hash=get_password_hash("IA1-password@_new"),
+                password_hash=get_password_hash("IA1-password@_new"),  # contraseña hasheada con bcrypt
             ))
 
-        # Default bot config
+        # Crea la entrada de configuración del Chat ID si no existe
         if not db.query(BotConfig).filter(BotConfig.key == "telegram_chat_id").first():
-            db.add(BotConfig(key="telegram_chat_id", value=None))
+            db.add(BotConfig(key="telegram_chat_id", value=None))  # valor vacío hasta que el admin lo configure
 
-        # Skip if already seeded
+        # Si ya hay categorías, los datos de preguntas/respuestas ya fueron insertados; salir
         if db.query(Category).count() > 0:
             db.commit()
             return
 
-        # Categories
-        cat1 = Category(name="Horarios y Fechas", description="Información sobre horarios y fechas importantes")
-        cat2 = Category(name="Requisitos y Trámites", description="Documentación y procesos de inscripción")
-        cat3 = Category(name="Servicios y Recursos", description="Servicios disponibles para estudiantes")
+        # ── Categorías ──────────────────────────────────────────────────────────
+        cat1 = Category(name="Horarios y Fechas",      description="Información sobre horarios y fechas importantes")
+        cat2 = Category(name="Requisitos y Trámites",  description="Documentación y procesos de inscripción")
+        cat3 = Category(name="Servicios y Recursos",   description="Servicios disponibles para estudiantes")
         cat4 = Category(name="Tecnología e Informática", description="Soporte técnico y recursos digitales")
-        cat5 = Category(name="General", description="Preguntas generales de la facultad")
+        cat5 = Category(name="General",                description="Preguntas generales de la facultad")
         db.add_all([cat1, cat2, cat3, cat4, cat5])
+        # flush() envía los INSERTs a la BD sin hacer commit, para que los objetos reciban su id
         db.flush()
 
+        # ── Preguntas y respuestas ───────────────────────────────────────────────
+        # Cada tupla: (id de categoría, texto de pregunta, texto de respuesta)
         qa_data = [
             # Horarios y Fechas
             (cat1.id, "¿Cuál es el horario de la biblioteca?",
@@ -94,13 +99,13 @@ def seed_data():
         for cat_id, question_text, answer_text in qa_data:
             q = Question(question_text=question_text, category_id=cat_id)
             db.add(q)
-            db.flush()
+            db.flush()  # obtiene el id de la pregunta recién insertada
             db.add(Answer(answer_text=answer_text, question_id=q.id))
 
         db.commit()
         print("[SmartBot] Datos iniciales cargados correctamente.")
     except Exception as e:
-        db.rollback()
+        db.rollback()  # revierte todos los cambios si algo falló
         print(f"[SmartBot] Error al cargar datos iniciales: {e}")
     finally:
         db.close()

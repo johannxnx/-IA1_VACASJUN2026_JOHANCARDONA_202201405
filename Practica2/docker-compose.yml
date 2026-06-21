@@ -1,45 +1,70 @@
+# Define todos los contenedores (servicios) que forman la aplicación
 services:
-  db:
-    image: postgres:15-alpine
-    container_name: smartbot_db
-    environment:
-      POSTGRES_DB: smartbot_db
-      POSTGRES_USER: smartbot_user
-      POSTGRES_PASSWORD: smartbot_pass
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U smartbot_user -d smartbot_db"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
-  backend:
-    build: ./backend
-    container_name: smartbot_backend
+  # ─────────────────────────────────────────────────────────────
+  # SERVICIO 1: Base de datos PostgreSQL
+  # ─────────────────────────────────────────────────────────────
+  db:
+    image: postgres:15-alpine          # Usa la imagen oficial de PostgreSQL 15 (alpine = versión ligera)
+    container_name: smartbot_db        # Nombre del contenedor para identificarlo fácilmente
+
+    environment:                       # Variables de entorno que PostgreSQL lee al iniciarse
+      POSTGRES_DB: smartbot_db         # Nombre de la base de datos que se crea automáticamente
+      POSTGRES_USER: smartbot_user     # Usuario con acceso a esa base de datos
+      POSTGRES_PASSWORD: smartbot_pass # Contraseña del usuario anterior
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Monta el volumen "postgres_data" en la carpeta donde Postgres guarda sus archivos; así los datos persisten aunque el contenedor se reinicie
+
     ports:
-      - "8000:8000"
-    environment:
-      DATABASE_URL: postgresql://smartbot_user:smartbot_pass@db:5432/smartbot_db
-      SECRET_KEY: smartbot-secret-key-change-in-production-2024
-      ALGORITHM: HS256
-      ACCESS_TOKEN_EXPIRE_MINUTES: 1440
+      - "5432:5432"                    # Expone el puerto 5432 del contenedor al puerto 5432 del host (formato host:contenedor)
+
+    healthcheck:                       # Comprueba periódicamente si Postgres ya está listo para aceptar conexiones
+      test: ["CMD-SHELL", "pg_isready -U smartbot_user -d smartbot_db"]  # Comando que verifica si la BD responde
+      interval: 10s                    # Repite la comprobación cada 10 segundos
+      timeout: 5s                      # Tiempo máximo de espera por respuesta antes de considerar fallido
+      retries: 5                       # Número de intentos fallidos antes de marcar el servicio como "unhealthy"
+
+  # ─────────────────────────────────────────────────────────────
+  # SERVICIO 2: Backend FastAPI
+  # ─────────────────────────────────────────────────────────────
+  backend:
+    build: ./backend                   # Construye la imagen a partir del Dockerfile ubicado en la carpeta ./backend
+    container_name: smartbot_backend   # Nombre del contenedor
+
+    ports:
+      - "8000:8000"                    # Expone el puerto 8000 (donde corre uvicorn/FastAPI) al host
+
+    environment:                       # Variables de entorno que lee la aplicación Python
+      DATABASE_URL: postgresql://smartbot_user:smartbot_pass@db:5432/smartbot_db  # Cadena de conexión a la BD; "db" es el nombre del servicio anterior (Docker lo resuelve como hostname)
+      SECRET_KEY: smartbot-secret-key-change-in-production-2024  # Clave secreta para firmar los tokens JWT
+      ALGORITHM: HS256                 # Algoritmo de cifrado usado para los tokens JWT
+      ACCESS_TOKEN_EXPIRE_MINUTES: 1440  # Tiempo de expiración del token JWT en minutos (1440 min = 24 horas)
+
     depends_on:
       db:
-        condition: service_healthy
-    restart: unless-stopped
+        condition: service_healthy     # El backend NO arranca hasta que el healthcheck del servicio "db" pase correctamente
 
+    restart: unless-stopped            # Reinicia el contenedor automáticamente si falla, excepto si fue detenido manualmente
+
+  # ─────────────────────────────────────────────────────────────
+  # SERVICIO 3: Bot de Telegram
+  # ─────────────────────────────────────────────────────────────
   bot:
-    build: ./bot
-    container_name: smartbot_bot
-    environment:
-      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
-      API_URL: http://backend:8000
-    depends_on:
-      - backend
-    restart: unless-stopped
+    build: ./bot                       # Construye la imagen a partir del Dockerfile ubicado en la carpeta ./bot
+    container_name: smartbot_bot       # Nombre del contenedor
 
+    environment:                       # Variables de entorno que lee el script del bot
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}  # Token del bot leído del archivo .env del host (nunca se escribe directamente aquí)
+      API_URL: http://backend:8000     # URL del backend; "backend" es el nombre del servicio anterior (Docker lo resuelve internamente)
+
+    depends_on:
+      - backend                        # El bot espera a que el contenedor del backend esté iniciado (pero el bot tiene su propia lógica de reintentos en bot.py)
+
+    restart: unless-stopped            # Reinicia automáticamente si el bot falla o se desconecta de Telegram
+
+# ─────────────────────────────────────────────────────────────
+# VOLÚMENES con nombre (gestionados por Docker)
+# ─────────────────────────────────────────────────────────────
 volumes:
-  postgres_data:
+  postgres_data:                       # Declara el volumen nombrado que usa el servicio "db"; Docker lo crea en la carpeta postgres_data/ del proyecto y lo gestiona entre reinicios
