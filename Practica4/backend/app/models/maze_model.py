@@ -33,7 +33,7 @@ class MazeResponse(BaseModel):
         explored       : Lista de celdas visitadas durante la búsqueda
         path_length    : Cantidad de celdas en la ruta final
         nodes_explored : Total de nodos explorados por el algoritmo
-        execution_time : Tiempo de ejecución en segundos
+        execution_time : Tiempo de ejecución en milisegundos
         message        : Mensaje descriptivo del resultado
     """
     found: bool
