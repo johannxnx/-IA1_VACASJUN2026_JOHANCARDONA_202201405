@@ -1,0 +1,428 @@
+/* ============================================================
+   styles.css - Estilos de RoboMaze
+   Organizado por secciones: variables, reset, layout,
+   componentes, cuadrícula, resultados, animaciones.
+   ============================================================ */
+
+/* ===== VARIABLES DE COLOR Y ESPACIADO ===== */
+:root {
+  --color-bg: #0f172a;          /* Fondo principal oscuro */
+  --color-surface: #1e293b;     /* Superficies secundarias */
+  --color-border: #334155;      /* Bordes sutiles */
+  --color-text: #e2e8f0;        /* Texto principal */
+  --color-text-muted: #94a3b8;  /* Texto secundario */
+
+  --color-primary: #6366f1;     /* Botón principal (indigo) */
+  --color-primary-h: #4f46e5;
+  --color-accent: #f59e0b;      /* Acento (amber) */
+  --color-accent-h: #d97706;
+  --color-danger: #ef4444;
+  --color-danger-h: #dc2626;
+  --color-success: #22c55e;
+
+  /* Colores de celdas del laberinto */
+  --cell-free: #1e293b;
+  --cell-wall: #1e3a5f;
+  --cell-start: #22c55e;
+  --cell-end: #ef4444;
+  --cell-explored: #7c3aed44;
+  --cell-path: #f59e0b;
+
+  --radius: 6px;
+  --gap: 1rem;
+}
+
+/* ===== RESET BÁSICO ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== ENCABEZADO ===== */
+.header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 1rem 2rem;
+}
+
+.header-content h1 {
+  font-size: 1.8rem;
+  color: var(--color-primary);
+  letter-spacing: 1px;
+}
+
+.header-content p {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-top: 2px;
+}
+
+/* ===== LAYOUT PRINCIPAL (sidebar + contenido central) ===== */
+.main-container {
+  display: flex;
+  flex: 1;
+  gap: 0;
+  overflow: hidden;
+}
+
+/* ===== PANEL LATERAL DE CONTROL ===== */
+.control-panel {
+  width: 280px;
+  min-width: 260px;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Cada sección del panel lateral */
+.panel-section {
+  background: #0f172a;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.panel-section h2 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-primary);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.3rem;
+}
+
+/* ===== LISTA DE LABERINTOS PREDEFINIDOS ===== */
+.maze-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.maze-list-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.7rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.maze-list-item:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* ===== CONTROLES DE TAMAÑO DE CUADRÍCULA ===== */
+.size-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.size-controls input {
+  width: 55px;
+  padding: 0.3rem 0.4rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.size-controls span {
+  color: var(--color-text-muted);
+}
+
+/* ===== BOTONES DE MODO DE EDICIÓN ===== */
+.mode-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+.btn-mode {
+  font-size: 0.75rem;
+  padding: 0.4rem 0.3rem;
+}
+
+.btn-mode.active {
+  background: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: white !important;
+}
+
+/* ===== SELECT ===== */
+.select-input {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  padding: 0.4rem 0.5rem;
+  font-size: 0.85rem;
+  width: 100%;
+}
+
+/* ===== BOTONES GENERALES ===== */
+.btn {
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: background 0.15s, transform 0.1s;
+  width: 100%;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-primary   { background: var(--color-primary); color: white; }
+.btn-primary:hover { background: var(--color-primary-h); }
+
+.btn-accent    { background: var(--color-accent); color: #000; }
+.btn-accent:hover { background: var(--color-accent-h); }
+
+.btn-secondary { background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-border); }
+.btn-secondary:hover { background: var(--color-border); }
+
+.btn-danger    { background: var(--color-danger); color: white; }
+.btn-danger:hover { background: var(--color-danger-h); }
+
+/* Botones de acción apilados */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* ===== LEYENDA ===== */
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.legend-box {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  border: 1px solid var(--color-border);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* Colores de la leyenda (coinciden con las celdas) */
+.cell-free     { background: var(--cell-free); }
+.cell-wall     { background: #1e4080; }
+.cell-start    { background: var(--cell-start); }
+.cell-end      { background: var(--cell-end); }
+.cell-explored { background: #7c3aed; }
+.cell-path     { background: var(--cell-path); }
+
+/* ===== ÁREA CENTRAL ===== */
+.center-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  gap: 1.5rem;
+  overflow-y: auto;
+}
+
+/* ===== LABERINTO (CUADRÍCULA) ===== */
+.maze-wrapper {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+
+.maze-grid {
+  display: grid;
+  gap: 2px;
+  /* Las columnas se definen dinámicamente desde maze.js */
+}
+
+/* Celda individual del laberinto */
+.cell {
+  width: 40px;
+  height: 40px;
+  border-radius: 3px;
+  border: 1px solid #1e3a5f22;
+  cursor: pointer;
+  transition: background 0.12s, transform 0.08s;
+  background: var(--cell-free);
+}
+
+.cell:hover { transform: scale(1.05); filter: brightness(1.3); }
+
+/* Estados de las celdas */
+.cell.wall     { background: #1e4080; border-color: #2d5fa0; }
+.cell.start    { background: var(--cell-start); border-color: #16a34a; }
+.cell.end      { background: var(--cell-end); border-color: #dc2626; }
+.cell.explored { background: #7c3aed; opacity: 0.7; }
+.cell.path     { background: var(--cell-path); border-color: #d97706; }
+
+/* Animación de aparición para celdas exploradas y ruta */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.cell.explored { animation: fadeIn 0.15s ease forwards; }
+.cell.path     { animation: fadeIn 0.2s ease forwards; }
+
+/* ===== PANEL DE RESULTADOS ===== */
+.results-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  width: 100%;
+  max-width: 800px;
+}
+
+.results-panel h2 {
+  font-size: 1rem;
+  color: var(--color-primary);
+  margin-bottom: 0.8rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.4rem;
+}
+
+/* Tarjetas de métricas en fila */
+.metrics-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.metric-card {
+  background: #0f172a;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 130px;
+  flex: 1;
+}
+
+.metric-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  letter-spacing: 0.5px;
+}
+
+.metric-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+/* ===== TABLA DE COMPARACIÓN ===== */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.compare-table th,
+.compare-table td {
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.compare-table th {
+  background: var(--color-primary);
+  color: white;
+}
+
+.compare-table tr:nth-child(even) td {
+  background: #0f172a;
+}
+
+/* ===== MENSAJE DE RESULTADO ===== */
+.result-message {
+  margin-top: 0.7rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  border: 1px solid var(--color-border);
+}
+
+.result-message.success { border-color: var(--color-success); color: var(--color-success); }
+.result-message.error   { border-color: var(--color-danger); color: var(--color-danger); }
+
+/* ===== LOADER ===== */
+.loader {
+  position: fixed;
+  inset: 0;
+  background: #0f172acc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  z-index: 999;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== UTILIDADES ===== */
+.hidden { display: none !important; }
+
+label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+/* ===== SCROLLBAR ESTILIZADA ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }

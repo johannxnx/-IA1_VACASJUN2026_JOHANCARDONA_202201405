@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoboMaze - IA1</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ===== ENCABEZADO ===== -->
+  <header class="header">
+    <div class="header-content">
+      <h1>RoboMaze</h1>
+      <p>Resolución de laberintos con BFS y DFS — Práctica 4 IA1</p>
+    </div>
+  </header>
+
+  <!-- ===== CONTENEDOR PRINCIPAL ===== -->
+  <main class="main-container">
+
+    <!-- ===== PANEL DE CONTROL (IZQUIERDA) ===== -->
+    <aside class="control-panel">
+
+      <!-- Sección: Laberintos predefinidos -->
+      <section class="panel-section">
+        <h2>Laberintos Predefinidos</h2>
+        <!-- La lista se llena dinámicamente desde maze.js -->
+        <div id="predefined-mazes" class="maze-list"></div>
+      </section>
+
+      <!-- Sección: Configuración del laberinto -->
+      <section class="panel-section">
+        <h2>Configuración</h2>
+
+        <!-- Selector de tamaño de cuadrícula -->
+        <label for="grid-size">Tamaño de la cuadrícula:</label>
+        <div class="size-controls">
+          <input type="number" id="grid-rows" min="3" max="15" value="8" />
+          <span>x</span>
+          <input type="number" id="grid-cols" min="3" max="15" value="8" />
+          <button id="btn-resize" class="btn btn-secondary">Redimensionar</button>
+        </div>
+
+        <!-- Modo de edición de celdas -->
+        <label>Modo de edición:</label>
+        <div class="mode-buttons">
+          <button id="mode-wall" class="btn btn-mode active" data-mode="wall">Obstáculo</button>
+          <button id="mode-start" class="btn btn-mode" data-mode="start">Inicio</button>
+          <button id="mode-end" class="btn btn-mode" data-mode="end">Destino</button>
+          <button id="mode-clear" class="btn btn-mode" data-mode="clear">Limpiar</button>
+        </div>
+      </section>
+
+      <!-- Sección: Selección y ejecución de algoritmo -->
+      <section class="panel-section">
+        <h2>Algoritmo</h2>
+
+        <label for="algorithm-select">Seleccionar algoritmo:</label>
+        <select id="algorithm-select" class="select-input">
+          <option value="bfs">BFS - Breadth First Search</option>
+          <option value="dfs">DFS - Depth First Search</option>
+        </select>
+
+        <!-- Botones de acción principales -->
+        <div class="action-buttons">
+          <button id="btn-search" class="btn btn-primary">Ejecutar Búsqueda</button>
+          <button id="btn-compare" class="btn btn-accent">Comparar BFS vs DFS</button>
+          <button id="btn-clear-result" class="btn btn-secondary">Limpiar Resultado</button>
+          <button id="btn-reset" class="btn btn-danger">Reiniciar Todo</button>
+        </div>
+      </section>
+
+      <!-- Sección: Leyenda de colores -->
+      <section class="panel-section">
+        <h2>Leyenda</h2>
+        <div class="legend">
+          <div class="legend-item"><span class="legend-box cell-free"></span> Celda libre</div>
+          <div class="legend-item"><span class="legend-box cell-wall"></span> Obstáculo</div>
+          <div class="legend-item"><span class="legend-box cell-start"></span> Inicio</div>
+          <div class="legend-item"><span class="legend-box cell-end"></span> Destino</div>
+          <div class="legend-item"><span class="legend-box cell-explored"></span> Explorado</div>
+          <div class="legend-item"><span class="legend-box cell-path"></span> Ruta final</div>
+        </div>
+      </section>
+
+    </aside>
+
+    <!-- ===== ÁREA CENTRAL: LABERINTO + RESULTADOS ===== -->
+    <div class="center-area">
+
+      <!-- Cuadrícula del laberinto (se genera dinámicamente) -->
+      <div id="maze-container" class="maze-wrapper">
+        <div id="maze-grid" class="maze-grid"></div>
+      </div>
+
+      <!-- Panel de resultados de la búsqueda -->
+      <div id="results-panel" class="results-panel hidden">
+
+        <!-- Título dinámico del resultado -->
+        <h2 id="result-title">Resultados</h2>
+
+        <!-- Tarjetas de métricas -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-label">Algoritmo</span>
+            <span class="metric-value" id="metric-algorithm">—</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">¿Ruta encontrada?</span>
+            <span class="metric-value" id="metric-found">—</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Longitud de ruta</span>
+            <span class="metric-value" id="metric-path-length">—</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Nodos explorados</span>
+            <span class="metric-value" id="metric-nodes">—</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Tiempo de ejecución</span>
+            <span class="metric-value" id="metric-time">—</span>
+          </div>
+        </div>
+
+        <!-- Tabla de comparación BFS vs DFS (se muestra al comparar) -->
+        <div id="comparison-table" class="hidden">
+          <h3>Comparación BFS vs DFS</h3>
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Métrica</th>
+                <th>BFS</th>
+                <th>DFS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>¿Ruta encontrada?</td>
+                <td id="cmp-bfs-found">—</td>
+                <td id="cmp-dfs-found">—</td>
+              </tr>
+              <tr>
+                <td>Longitud de ruta</td>
+                <td id="cmp-bfs-length">—</td>
+                <td id="cmp-dfs-length">—</td>
+              </tr>
+              <tr>
+                <td>Nodos explorados</td>
+                <td id="cmp-bfs-nodes">—</td>
+                <td id="cmp-dfs-nodes">—</td>
+              </tr>
+              <tr>
+                <td>Tiempo (seg)</td>
+                <td id="cmp-bfs-time">—</td>
+                <td id="cmp-dfs-time">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mensaje de estado (ruta encontrada / sin ruta) -->
+        <p id="result-message" class="result-message"></p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===== LOADER (visible durante peticiones al backend) ===== -->
+  <div id="loader" class="loader hidden">
+    <div class="spinner"></div>
+    <p>Ejecutando algoritmo...</p>
+  </div>
+
+  <!-- ===== SCRIPTS (en orden de dependencia) ===== -->
+  <script src="js/api.js"></script>    <!-- Capa de comunicación con el backend -->
+  <script src="js/maze.js"></script>   <!-- Lógica del laberinto y cuadrícula -->
+  <script src="js/app.js"></script>    <!-- Controlador principal de la app -->
+
+</body>
+</html>
