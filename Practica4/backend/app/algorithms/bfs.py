@@ -9,6 +9,8 @@ import time
 
 
 def bfs(grid: list[list[int]], start: list[int], end: list[int]) -> dict:
+    # perf_counter tiene resolución de nanosegundos, time.time() no es suficiente
+    # para operaciones que duran microsegundos
     """
     Ejecuta BFS sobre una cuadrícula 2D para encontrar la ruta más corta.
 
@@ -25,8 +27,8 @@ def bfs(grid: list[list[int]], start: list[int], end: list[int]) -> dict:
         dict con: found, path, explored, path_length, nodes_explored, execution_time
     """
 
-    # --- Inicio de medición de tiempo ---
-    start_time = time.time()
+    # --- Inicio de medición de tiempo (alta resolución) ---
+    start_time = time.perf_counter()
 
     filas = len(grid)
     columnas = len(grid[0])
@@ -89,8 +91,8 @@ def bfs(grid: list[list[int]], start: list[int], end: list[int]) -> dict:
             padres[vecino] = actual
             cola.append(vecino)
 
-    # --- Fin de medición de tiempo ---
-    execution_time = time.time() - start_time
+    # --- Fin de medición: convertir a milisegundos ---
+    execution_time = (time.perf_counter() - start_time) * 1000
 
     # Reconstruir la ruta si se encontró el destino
     ruta = []
@@ -103,7 +105,7 @@ def bfs(grid: list[list[int]], start: list[int], end: list[int]) -> dict:
         "explored": explorados,
         "path_length": len(ruta),
         "nodes_explored": len(explorados),
-        "execution_time": round(execution_time, 6),
+        "execution_time": round(execution_time, 4),  # en milisegundos
         "message": "Ruta encontrada con BFS." if encontrado else "No existe ruta entre el origen y el destino."
     }
 

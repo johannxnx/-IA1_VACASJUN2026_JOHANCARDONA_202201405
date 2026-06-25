@@ -181,7 +181,8 @@ function showSingleResult(algorithmName, result) {
   document.getElementById("metric-found").textContent = result.found ? "Sí" : "No";
   document.getElementById("metric-path-length").textContent = result.path_length;
   document.getElementById("metric-nodes").textContent = result.nodes_explored;
-  document.getElementById("metric-time").textContent = `${result.execution_time} s`;
+  // El backend ya retorna el tiempo en milisegundos
+  document.getElementById("metric-time").textContent = `${result.execution_time.toFixed(4)} ms`;
 
   // Mensaje de estado con color según si se encontró ruta o no
   const msg = document.getElementById("result-message");
@@ -212,8 +213,8 @@ function showComparisonResult(bfs, dfs) {
   document.getElementById("cmp-dfs-length").textContent = dfs.path_length;
   document.getElementById("cmp-bfs-nodes").textContent  = bfs.nodes_explored;
   document.getElementById("cmp-dfs-nodes").textContent  = dfs.nodes_explored;
-  document.getElementById("cmp-bfs-time").textContent   = `${bfs.execution_time} s`;
-  document.getElementById("cmp-dfs-time").textContent   = `${dfs.execution_time} s`;
+  document.getElementById("cmp-bfs-time").textContent   = `${bfs.execution_time.toFixed(4)} ms`;
+  document.getElementById("cmp-dfs-time").textContent   = `${dfs.execution_time.toFixed(4)} ms`;
 
   const msg = document.getElementById("result-message");
   msg.textContent = `BFS exploró ${bfs.nodes_explored} nodos | DFS exploró ${dfs.nodes_explored} nodos`;
